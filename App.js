@@ -1,45 +1,39 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View, SafeAreaView, Platform, StatusBar} from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, Picker} from 'react-native';
 
 
-export default function App() {
+const App = () => {
+  const [selectedValue, setSelectedValue] = useState("java");
+
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
+      <Picker selectedValue={selectedValue}
+        onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+        
+        <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
+        <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
+        <Picker.Item label="Armenian" value="arm" />
+        <Picker.Item label="English" value="eng" />
+      </Picker>
+    
+      <View style={styles.languageContainer}>
+        <Text style={styles.armenianText}>
+          My armenian text. My armenian text. My armenian text
+        </Text>
+      </View>
       
       <View style={styles.languageContainer}>
         <Text style={styles.armenianText}>
-          My armenian text. My armenian text. My armenian text
-          My armenian text. My armenian text. My armenian text
-          My armenian text. My armenian text. My armenian text
-          My armenian text. My armenian text. My armenian text
-          My armenian text. My armenian text. My armenian text
-          My armenian text. My armenian text. My armenian text
-        </Text>
-      </View>
-
-      <View style={styles.languageContainer}>
-        <Text style={styles.armenianText}>
-          My translit text. My translit text. My translit text
-          My translit text. My translit text. My translit text
-          My translit text. My translit text. My translit text
-          My translit text. My translit text. My translit text
-          My translit text. My translit text. My translit text
           My translit text. My translit text. My translit text
         </Text>
       </View>
-
+      
       <View style={styles.languageContainer}>
         <Text style={styles.armenianText}>
           My english text. My english text. My english text
-          My english text. My english text. My english text
-          My english text. My english text. My english text
-          My english text. My english text. My english text
-          My english text. My english text. My english text
-          My english text. My english text. My english text
         </Text>
       </View>
-
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -66,4 +60,4 @@ const styles = StyleSheet.create({
   }
 });
 
-
+export default App;
