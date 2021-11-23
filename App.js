@@ -16,22 +16,24 @@ const App = () => {
         <Picker.Item label="English" value="eng" />
       </Picker>
     
-      <View style={styles.languageContainer}>
-        <Text style={styles.armenianText}>
-          My armenian text. My armenian text. My armenian text
-        </Text>
-      </View>
-      
-      <View style={styles.languageContainer}>
-        <Text style={styles.armenianText}>
-          My translit text. My translit text. My translit text
-        </Text>
-      </View>
-      
-      <View style={styles.languageContainer}>
-        <Text style={styles.armenianText}>
-          My english text. My english text. My english text
-        </Text>
+      <View style={styles.screenTextContainer}>
+        <View style={styles.languageContainer}>
+          <Text style={styles.armenianText}>
+            My armenian text. My armenian text. My armenian text
+          </Text>
+        </View>
+        
+        <View style={styles.languageContainer}>
+          <Text style={styles.armenianText}>
+            My translit text. My translit text. My translit text
+          </Text>
+        </View>
+        
+        <View style={styles.languageContainer}>
+          <Text style={styles.armenianText}>
+            My english text. My english text. My english text
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     backgroundColor: '#fff',
+    flexDirection: "column"
+  },
+  screenTextContainer: {
     flexDirection: "row"
   },
   languageContainer: {
