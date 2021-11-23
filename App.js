@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { View, Text, StyleSheet, StatusBar, Image } from 'react-native';
+//import * as React, { useState } from 'react';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -8,14 +9,185 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Armenian Reader" component={HomeScreen} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Liturgy" component={TextScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
+function HomeScreen({navigation}) {
+  return (
+    <View style={stylesHomeScreen.screen}>
+      <Image style={stylesHomeScreen.headerImage}
+        source={require('./assets/Gomidas.png')} />
+      
+      <TouchableOpacity onPress={() => navigation.navigate('Liturgy')}>
+        <View style={stylesHomeScreen.listItemContainer}>  
+          <Image style={stylesHomeScreen.listItemIcon}
+            source={require('./assets/OotL_Icon.png')} />
+          
+          <View style={stylesHomeScreen.listItemTextContainer}>
+            <Text style={stylesHomeScreen.listItemTitle}>
+              The Offering of the Lamb
+            </Text>
+            <Text style={stylesHomeScreen.listItemSubtitle}>
+              We offer the bread and wine and ourselves to God
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      <View style={stylesHomeScreen.listItemContainer}>  
+        <Image style={stylesHomeScreen.listItemIcon}
+          source={require('./assets/LotW_Icon.png')} />
+        
+        <View style={stylesHomeScreen.listItemTextContainer}>
+          <Text style={stylesHomeScreen.listItemTitle}>
+            The Liturgy of the Word
+          </Text>
+          <Text style={stylesHomeScreen.listItemSubtitle}>
+            We listen to the Word of God from the Bible and to a sermon
+          </Text>
+        </View>
+      </View>
+      <View style={stylesHomeScreen.listItemContainer}>  
+        
+        <Image style={stylesHomeScreen.listItemIcon}
+          source={require('./assets/LotF_Icon.png')} />
+    
+        <View style={stylesHomeScreen.listItemTextContainer}>
+          <Text style={stylesHomeScreen.listItemTitle}>
+            The Liturgy of the Faithful
+          </Text>
+          <Text style={stylesHomeScreen.listItemSubtitle}>
+            We receive the Body and Blood of Jesus
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function TextScreen({navigation}) {
+  const [selectedValue, setSelectedValue] = useState("arm_tra_eng");
+
+  if(selectedValue == "arm_tra_eng"){
+    return (
+      <SafeAreaView style={stylesTextScreen.screen}>
+        <Picker 
+          selectedValue={selectedValue}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+        
+          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
+          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
+          <Picker.Item label="Armenian" value="arm" />
+        </Picker>
+        
+        <View style={stylesTextScreen.screenTextContainer}>
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+            </Text>
+          </View>
+
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+            </Text>
+          </View>
+
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My english text. My english text. My english text
+              My english text. My english text. My english text
+              My english text. My english text. My english text
+              My english text. My english text. My english text
+              My english text. My english text. My english text
+              My english text. My english text. My english text
+            </Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    )
+  }else if(selectedValue == "arm_tra"){
+    return (
+      <SafeAreaView style={stylesTextScreen.screen}>
+        <Picker 
+          selectedValue={selectedValue}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+        
+          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
+          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
+          <Picker.Item label="Armenian" value="arm" />
+        </Picker>
+        
+        <View style={stylesTextScreen.screenTextContainer}>
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+            </Text>
+          </View>
+
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+              My translit text. My translit text. My translit text
+            </Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    )
+  }else if(selectedValue == "arm"){
+    return (
+      <SafeAreaView style={stylesTextScreen.screen}>
+        <Picker 
+          selectedValue={selectedValue}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+        
+          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
+          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
+          <Picker.Item label="Armenian" value="arm" />
+        </Picker>
+        
+        <View style={stylesTextScreen.screenTextContainer}>
+          <View style={stylesTextScreen.languageContainer}>
+            <Text style={stylesTextScreen.text}>
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+              My armenian text. My armenian text. My armenian text
+            </Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    )
+  }
+}
+
+const stylesHomeScreen = StyleSheet.create({
   screen: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
@@ -53,53 +225,22 @@ const styles = StyleSheet.create({
   },
 });
 
-function HomeScreen() {
-  return (
-    <View style={styles.screen}>
-      <Image style={styles.headerImage}
-        source={require('./assets/Gomidas.png')} />
-        
-      <View style={styles.listItemContainer}>  
-        <Image style={styles.listItemIcon}
-          source={require('./assets/OotL_Icon.png')} />
-        
-        <View style={styles.listItemTextContainer}>
-          <Text style={styles.listItemTitle}>
-            The Offering of the Lamb
-          </Text>
-          <Text style={styles.listItemSubtitle}>
-            We offer the bread and wine and ourselves to God
-          </Text>
-        </View>
-      </View>
-      <View style={styles.listItemContainer}>  
-        <Image style={styles.listItemIcon}
-          source={require('./assets/LotW_Icon.png')} />
-        
-        <View style={styles.listItemTextContainer}>
-          <Text style={styles.listItemTitle}>
-            The Liturgy of the Word
-          </Text>
-          <Text style={styles.listItemSubtitle}>
-            We listen to the Word of God from the Bible and to a sermon
-          </Text>
-        </View>
-      </View>
-      <View style={styles.listItemContainer}>  
-        
-        <Image style={styles.listItemIcon}
-          source={require('./assets/LotF_Icon.png')} />
-    
-        <View style={styles.listItemTextContainer}>
-          <Text style={styles.listItemTitle}>
-            The Liturgy of the Faithful
-          </Text>
-          <Text style={styles.listItemSubtitle}>
-            We receive the Body and Blood of Jesus
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-}
-
+const stylesTextScreen = StyleSheet.create({
+  screen: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: '#fff',
+    flexDirection: "column"
+  },
+  screenTextContainer: {
+    flexDirection: "row"
+  },
+  languageContainer: {
+    width: "33%",
+    padding: 4,
+    flexGrow: 1
+  },
+  text: {
+    fontSize: 20,
+  }
+});
