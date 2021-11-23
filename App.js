@@ -1,141 +1,89 @@
-import React, { useState } from 'react';
-import {StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, Picker} from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, View, SafeAreaView, Platform, StatusBar} from 'react-native';
 
-
-export default function App () {
-
-  const [selectedValue, setSelectedValue] = useState("arm_tra_eng");
-
-  if(selectedValue == "arm_tra_eng"){
-    return (
-      <SafeAreaView style={styles.screen}>
-        <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-        
-        <View style={styles.screenTextContainer}>
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-            </Text>
-          </View>
-
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-            </Text>
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }else if(selectedValue == "arm_tra"){
-    return (
-      <SafeAreaView style={styles.screen}>
-        <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-        
-        <View style={styles.screenTextContainer}>
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-            </Text>
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }else if(selectedValue == "arm"){
-    return (
-      <SafeAreaView style={styles.screen}>
-        <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-        
-        <View style={styles.screenTextContainer}>
-          <View style={styles.languageContainer}>
-            <Text style={styles.text}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }
+export default function App() {
+  return (
+    <View style={styles.screen}>
+    <Image style={styles.headerImage}
+      source={require('./assets/Gomidas.png')} />
+      
+    <View style={styles.listItemContainer}>  
+      <Image style={styles.listItemIcon}
+        source={require('./assets/OotL_Icon.png')} />
+      
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Offering of the Lamb
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We offer the bread and wine and ourselves to God
+        </Text>
+      </View>
+    </View>
+    <View style={styles.listItemContainer}>  
+      <Image style={styles.listItemIcon}
+        source={require('./assets/LotW_Icon.png')} />
+      
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Liturgy of the Word
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We listen to the Word of God from the Bible and to a sermon
+        </Text>
+      </View>
+    </View>
+    <View style={styles.listItemContainer}>  
+      
+      <Image style={styles.listItemIcon}
+        source={require('./assets/LotF_Icon.png')} />
+  
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Liturgy of the Faithful
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We receive the Body and Blood of Jesus
+        </Text>
+      </View>
+    </View>
+  </View>
+  );
 }
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    backgroundColor: '#fff',
-    flexDirection: "column"
+    backgroundColor: '#ecf0f1',
   },
-  screenTextContainer: {
-    flexDirection: "row"
+  headerImage: {
+    alignSelf: "center",
+    justifyContent: "center",
+    height: 150,
+    width: 400
   },
-  languageContainer: {
-    width: "33%",
-    padding: 4,
-    flexGrow: 1
+  listItemContainer: { 
+    paddingTop: 50,
+    flexDirection: "row",
+    paddingLeft: 30,
+    marginBottom: 35
   },
-  text: {
+  listItemIcon: {
+    height: 80,
+    width: 80,
+  },
+  listItemTextContainer: {
+    flexDirection: "column",
+    paddingLeft: 30,
+    paddingTop: 4
+  },
+  listItemTitle: {
+    fontWeight: "bold",
     fontSize: 20,
-  }
+  },
+  listItemSubtitle: {
+    color: "gray",
+    fontSize: 14,
+    paddingRight: 100
+  },
 });
