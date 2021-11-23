@@ -196,7 +196,7 @@ const stylesHomeScreen = StyleSheet.create({
   headerImage: {
     alignSelf: "center",
     justifyContent: "center",
-    height: 150,
+    height: 100,
     width: 400
   },
   listItemContainer: { 
