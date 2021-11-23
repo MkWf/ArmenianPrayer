@@ -3,92 +3,87 @@ import { Image, StyleSheet, Text, View, SafeAreaView, Platform, StatusBar} from 
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-
-      <View style={styles.headerImage}>
-        <Image source={require('./assets/Gomidas.png')}/>
+    <View style={styles.screen}>
+    <Image style={styles.headerImage}
+      source={require('./assets/Gomidas.png')} />
+      
+    <View style={styles.listItemContainer}>  
+      <Image style={styles.listItemIcon}
+        source={require('./assets/OotL_Icon.png')} />
+      
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Offering of the Lamb
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We offer the bread and wine and ourselves to God
+        </Text>
       </View>
-
-      <View style={styles.listContainer}>
-        <View style={styles.listItem}>
-          <Image source={require('./assets/OotL_Icon.png')}/>
-          
-          <View flexDirection="column">
-            <Text style={styles.itemTitle}>
-              {"The Offering of the Lamb"}
-            </Text>
-            <Text style={styles.itemSubtitle}>
-              {"We offer the bread and wine and ourselves to God"}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.listItem}>
-          <Image source={require('./assets/LotW_Icon.png')}/>
-          
-          <View flexDirection="column">
-            <Text style={styles.itemTitle}>
-              {"The Liturgy of the Word"}
-            </Text>
-            <Text style={styles.itemSubtitle}>
-              {"We listen to the Word of God from the Bible and to a sermon"}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.listItem}>
-          <Image source={require('./assets/LotF_Icon.png')}/>
-          
-          <View flexDirection="column">
-            <Text style={styles.itemTitle}>
-              {"The Liturgy of the Faithful"}
-            </Text>
-            <Text style={styles.itemSubtitle}>
-                {"We receive the Body and Blood of Jesus"}
-            </Text>
-          </View>
-        </View>
+    </View>
+    <View style={styles.listItemContainer}>  
+      <Image style={styles.listItemIcon}
+        source={require('./assets/LotW_Icon.png')} />
+      
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Liturgy of the Word
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We listen to the Word of God from the Bible and to a sermon
+        </Text>
       </View>
-    </SafeAreaView>
+    </View>
+    <View style={styles.listItemContainer}>  
+      
+      <Image style={styles.listItemIcon}
+        source={require('./assets/LotF_Icon.png')} />
+  
+      <View style={styles.listItemTextContainer}>
+        <Text style={styles.listItemTitle}>
+          The Liturgy of the Faithful
+        </Text>
+        <Text style={styles.listItemSubtitle}>
+          We receive the Body and Blood of Jesus
+        </Text>
+      </View>
+    </View>
+  </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: "antiquewhite",
-    flexDirection: "column",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: '#ecf0f1',
   },
   headerImage: {
+    alignSelf: "center",
     justifyContent: "center",
-    alignItems: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    height: 150,
+    width: 400
   },
-  listContainer: {
-    flex: 1,
-    justifyContent: 'space-evenly'
-  },
-  listItem: {
+  listItemContainer: { 
+    paddingTop: 50,
     flexDirection: "row",
-    alignItems: 'center'
+    paddingLeft: 30,
+    marginBottom: 35
   },
-  listText: {
+  listItemIcon: {
+    height: 80,
+    width: 80,
+  },
+  listItemTextContainer: {
     flexDirection: "column",
+    paddingLeft: 30,
+    paddingTop: 4
   },
-  itemLogo: {
-    height: 160,
-    width: 160,
-  },
-  itemTitle: {
+  listItemTitle: {
     fontWeight: "bold",
-    fontSize: 24,
-  },
-  itemSubtitle: {
     fontSize: 20,
-    color: "grey",
-    paddingRight: 130
   },
-
+  listItemSubtitle: {
+    color: "gray",
+    fontSize: 14,
+    paddingRight: 100
+  },
 });
-
-
