@@ -74,7 +74,6 @@ function HomeScreen({navigation}) {
 function TextScreen({navigation}) {
   const [languageValue, setlanguageValue] = useState("arm_tra_eng");
   const [fontValue, setFontValue] = useState(20);
-  console.log(fontValue);
 
   if(languageValue == "arm_tra_eng"){
     return (
