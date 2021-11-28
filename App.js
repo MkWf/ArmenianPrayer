@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Slider } from "@miblanchard/react-native-slider";
 
 const Stack = createNativeStackNavigator();
 
@@ -84,7 +85,9 @@ function TextScreen({navigation}) {
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
           <Picker.Item label="Armenian" value="arm" />
         </Picker>
-        
+
+        <Slider/>
+
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
             <Text style={stylesTextScreen.text}>
