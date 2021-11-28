@@ -74,6 +74,7 @@ function HomeScreen({navigation}) {
 function TextScreen({navigation}) {
   const [languageValue, setlanguageValue] = useState("arm_tra_eng");
   const [fontValue, setFontValue] = useState(20);
+  console.log(fontValue);
 
   if(languageValue == "arm_tra_eng"){
     return (
@@ -99,7 +100,7 @@ function TextScreen({navigation}) {
 
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
@@ -110,7 +111,7 @@ function TextScreen({navigation}) {
           </View>
 
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My translit text. My translit text. My translit text
               My translit text. My translit text. My translit text
               My translit text. My translit text. My translit text
@@ -121,7 +122,7 @@ function TextScreen({navigation}) {
           </View>
 
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My english text. My english text. My english text
               My english text. My english text. My english text
               My english text. My english text. My english text
@@ -144,10 +145,20 @@ function TextScreen({navigation}) {
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
           <Picker.Item label="Armenian" value="arm" />
         </Picker>
+
+        <Text> Font Size: {fontValue} </Text>
+        <Slider
+            value={fontValue}
+            minimumValue={10}
+            maximumValue={30}
+            step={2}
+            trackClickable={true}
+            onValueChange={value => setFontValue(value)}
+        />
         
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
@@ -158,7 +169,7 @@ function TextScreen({navigation}) {
           </View>
 
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My translit text. My translit text. My translit text
               My translit text. My translit text. My translit text
               My translit text. My translit text. My translit text
@@ -181,10 +192,20 @@ function TextScreen({navigation}) {
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
           <Picker.Item label="Armenian" value="arm" />
         </Picker>
+
+        <Text> Font Size: {fontValue} </Text>
+        <Slider
+            value={fontValue}
+            minimumValue={10}
+            maximumValue={30}
+            step={2}
+            trackClickable={true}
+            onValueChange={value => setFontValue(value)}
+        />
         
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
-            <Text style={stylesTextScreen.text}>
+            <Text style={{fontSize: fontValue[0]}}>
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
               My armenian text. My armenian text. My armenian text
@@ -253,6 +274,6 @@ const stylesTextScreen = StyleSheet.create({
     flexGrow: 1
   },
   text: {
-    fontSize: 20,
+    fontSize: 20
   }
 });
