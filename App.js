@@ -1,6 +1,6 @@
 //import * as React, { useState } from 'react';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Slider } from "@miblanchard/react-native-slider";
@@ -98,6 +98,7 @@ function TextScreen({navigation}) {
             onValueChange={value => setFontValue(value)}
         />
 
+      <ScrollView>
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
             <Text style={{fontSize: fontValue[0]}}>
@@ -109,7 +110,7 @@ function TextScreen({navigation}) {
               My armenian text. My armenian text. My armenian text
             </Text>
           </View>
-
+          
           <View style={stylesTextScreen.languageContainer}>
             <Text style={{fontSize: fontValue[0]}}>
               My translit text. My translit text. My translit text
@@ -132,6 +133,7 @@ function TextScreen({navigation}) {
             </Text>
           </View>
         </View>
+      </ScrollView>
       </SafeAreaView>
     )
   }else if(languageValue == "arm_tra"){
@@ -156,6 +158,7 @@ function TextScreen({navigation}) {
             onValueChange={value => setFontValue(value)}
         />
         
+        <ScrollView>
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
             <Text style={{fontSize: fontValue[0]}}>
@@ -179,6 +182,7 @@ function TextScreen({navigation}) {
             </Text>
           </View>
         </View>
+        </ScrollView>
       </SafeAreaView>
     )
   }else if(languageValue == "arm"){
@@ -203,6 +207,7 @@ function TextScreen({navigation}) {
             onValueChange={value => setFontValue(value)}
         />
         
+        <ScrollView>
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
             <Text style={{fontSize: fontValue[0]}}>
@@ -215,6 +220,7 @@ function TextScreen({navigation}) {
             </Text>
           </View>
         </View>
+        </ScrollView>
       </SafeAreaView>
     )
   }
