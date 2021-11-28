@@ -72,21 +72,30 @@ function HomeScreen({navigation}) {
 }
 
 function TextScreen({navigation}) {
-  const [selectedValue, setSelectedValue] = useState("arm_tra_eng");
+  const [languageValue, setlanguageValue] = useState("arm_tra_eng");
+  const [fontValue, setFontValue] = useState(20);
 
-  if(selectedValue == "arm_tra_eng"){
+  if(languageValue == "arm_tra_eng"){
     return (
       <SafeAreaView style={stylesTextScreen.screen}>
         <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+          languageValue={languageValue}
+          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
         
           <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
           <Picker.Item label="Armenian" value="arm" />
         </Picker>
 
-        <Slider/>
+        <Text> Font Size: {fontValue} </Text>
+        <Slider
+            value={fontValue}
+            minimumValue={10}
+            maximumValue={30}
+            step={2}
+            trackClickable={true}
+            onValueChange={value => setFontValue(value)}
+        />
 
         <View style={stylesTextScreen.screenTextContainer}>
           <View style={stylesTextScreen.languageContainer}>
@@ -124,12 +133,12 @@ function TextScreen({navigation}) {
         </View>
       </SafeAreaView>
     )
-  }else if(selectedValue == "arm_tra"){
+  }else if(languageValue == "arm_tra"){
     return (
       <SafeAreaView style={stylesTextScreen.screen}>
         <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+          languageValue={languageValue}
+          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
         
           <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
@@ -161,12 +170,12 @@ function TextScreen({navigation}) {
         </View>
       </SafeAreaView>
     )
-  }else if(selectedValue == "arm"){
+  }else if(languageValue == "arm"){
     return (
       <SafeAreaView style={stylesTextScreen.screen}>
         <Picker 
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}>
+          languageValue={languageValue}
+          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
         
           <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
           <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
