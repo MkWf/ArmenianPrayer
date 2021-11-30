@@ -11,8 +11,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Liturgy" component={TextScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="Liturgy" component={TextScreen} options={{headerShown: false}}  />
       </Stack.Navigator>
     </NavigationContainer>
   );
