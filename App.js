@@ -1,6 +1,6 @@
 //import * as React, { useState } from 'react';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker, ScrollView, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Slider } from "@miblanchard/react-native-slider";
@@ -74,6 +74,7 @@ function HomeScreen({navigation}) {
 function TextScreen({navigation}) {
   const [languageValue, setlanguageValue] = useState("arm_tra_eng");
   const [fontValue, setFontValue] = useState(20);
+  const [isFullScreen, setFullscreen] = useState(false);
 
   if(languageValue == "arm_tra_eng"){
     return (
@@ -96,6 +97,11 @@ function TextScreen({navigation}) {
             trackClickable={true}
             onValueChange={value => setFontValue(value)}
         />
+
+        <Button 
+          title="Fullscreen"
+          onPress= {() => setFullscreen(!isFullScreen)}/>
+        <StatusBar hidden={isFullScreen}/>
 
       <ScrollView>
         <View style={stylesTextScreen.screenTextContainer}>
