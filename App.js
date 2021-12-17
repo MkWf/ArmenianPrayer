@@ -2709,7 +2709,6 @@ const html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.or
 </html>
 `;
 
-
 export default function App() {
   const { width } = useWindowDimensions();
 
