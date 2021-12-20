@@ -1,290 +1,55 @@
-//import * as React, { useState } from 'react';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, SafeAreaView, Picker, ScrollView, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Slider } from "@miblanchard/react-native-slider";
+import React, { useState } from "react";
+import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} from "react-native";
+import Constants from "expo-constants";
+import * as SQLite from "expo-sqlite";
 
-const Stack = createNativeStackNavigator();
+const db = openDatabase();
 
 export default function App() {
+ 
+  const db = SQLite.openDatabase("table.db");
+ 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="Liturgy" component={TextScreen} options={{headerShown: false}}  />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Text>
+        Hello
+    </Text>
   );
 }
 
-function HomeScreen({navigation}) {
-  return (
-    <View style={stylesHomeScreen.screen}>
-      <Image style={stylesHomeScreen.headerImage}
-        source={require('./assets/Gomidas.png')} />
-      
-      <TouchableOpacity onPress={() => navigation.navigate('Liturgy')}>
-        <View style={stylesHomeScreen.listItemContainer}>  
-          <Image style={stylesHomeScreen.listItemIcon}
-            source={require('./assets/OotL_Icon.png')} />
-          
-          <View style={stylesHomeScreen.listItemTextContainer}>
-            <Text style={stylesHomeScreen.listItemTitle}>
-              The Offering of the Lamb
-            </Text>
-            <Text style={stylesHomeScreen.listItemSubtitle}>
-              We offer the bread and wine and ourselves to God
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-
-      <View style={stylesHomeScreen.listItemContainer}>  
-        <Image style={stylesHomeScreen.listItemIcon}
-          source={require('./assets/LotW_Icon.png')} />
-        
-        <View style={stylesHomeScreen.listItemTextContainer}>
-          <Text style={stylesHomeScreen.listItemTitle}>
-            The Liturgy of the Word
-          </Text>
-          <Text style={stylesHomeScreen.listItemSubtitle}>
-            We listen to the Word of God from the Bible and to a sermon
-          </Text>
-        </View>
-      </View>
-      <View style={stylesHomeScreen.listItemContainer}>  
-        
-        <Image style={stylesHomeScreen.listItemIcon}
-          source={require('./assets/LotF_Icon.png')} />
-    
-        <View style={stylesHomeScreen.listItemTextContainer}>
-          <Text style={stylesHomeScreen.listItemTitle}>
-            The Liturgy of the Faithful
-          </Text>
-          <Text style={stylesHomeScreen.listItemSubtitle}>
-            We receive the Body and Blood of Jesus
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-function TextScreen({navigation}) {
-  const [languageValue, setlanguageValue] = useState("arm_tra_eng");
-  const [fontValue, setFontValue] = useState(20);
-  const [isFullScreen, setFullscreen] = useState(false);
-
-  if(languageValue == "arm_tra_eng"){
-    return (
-      <SafeAreaView style={stylesTextScreen.screen}>
-        <Picker 
-          languageValue={languageValue}
-          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-
-        <Text> Font Size: {fontValue} </Text>
-        <Slider
-            value={fontValue}
-            minimumValue={10}
-            maximumValue={30}
-            step={2}
-            trackClickable={true}
-            onValueChange={value => setFontValue(value)}
-        />
-
-        <Button 
-          title="Fullscreen"
-          onPress= {() => setFullscreen(!isFullScreen)}/>
-        <StatusBar hidden={isFullScreen}/>
-
-      <ScrollView>
-        <View style={stylesTextScreen.screenTextContainer}>
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-          
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-            </Text>
-          </View>
-
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-              My english text. My english text. My english text
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
-      </SafeAreaView>
-    )
-  }else if(languageValue == "arm_tra"){
-    return (
-      <SafeAreaView style={stylesTextScreen.screen}>
-        <Picker 
-          languageValue={languageValue}
-          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-
-        <Text> Font Size: {fontValue} </Text>
-        <Slider
-            value={fontValue}
-            minimumValue={10}
-            maximumValue={30}
-            step={2}
-            trackClickable={true}
-            onValueChange={value => setFontValue(value)}
-        />
-        
-        <ScrollView>
-        <View style={stylesTextScreen.screenTextContainer}>
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-              My translit text. My translit text. My translit text
-            </Text>
-          </View>
-        </View>
-        </ScrollView>
-      </SafeAreaView>
-    )
-  }else if(languageValue == "arm"){
-    return (
-      <SafeAreaView style={stylesTextScreen.screen}>
-        <Picker 
-          languageValue={languageValue}
-          onValueChange={(itemValue) => setlanguageValue(itemValue)}>
-        
-          <Picker.Item label="Armenian | Transliteration | English" value="arm_tra_eng" />
-          <Picker.Item label="Armenian | Transliteration" value="arm_tra" />
-          <Picker.Item label="Armenian" value="arm" />
-        </Picker>
-
-        <Text> Font Size: {fontValue} </Text>
-        <Slider
-            value={fontValue}
-            minimumValue={10}
-            maximumValue={30}
-            step={2}
-            trackClickable={true}
-            onValueChange={value => setFontValue(value)}
-        />
-        
-        <ScrollView>
-        <View style={stylesTextScreen.screenTextContainer}>
-          <View style={stylesTextScreen.languageContainer}>
-            <Text style={{fontSize: fontValue[0]}}>
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-              My armenian text. My armenian text. My armenian text
-            </Text>
-          </View>
-        </View>
-        </ScrollView>
-      </SafeAreaView>
-    )
-  }
-}
-
-const stylesHomeScreen = StyleSheet.create({
-  screen: {
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
     flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    backgroundColor: '#ecf0f1',
+    paddingTop: Constants.statusBarHeight,
   },
-  headerImage: {
-    alignSelf: "center",
-    justifyContent: "center",
-    height: 100,
-    width: 400
-  },
-  listItemContainer: { 
-    paddingTop: 50,
-    flexDirection: "row",
-    paddingLeft: 30,
-    marginBottom: 35
-  },
-  listItemIcon: {
-    height: 80,
-    width: 80,
-  },
-  listItemTextContainer: {
-    flexDirection: "column",
-    paddingLeft: 30,
-    paddingTop: 4
-  },
-  listItemTitle: {
-    fontWeight: "bold",
+  heading: {
     fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
   },
-  listItemSubtitle: {
-    color: "gray",
-    fontSize: 14,
-    paddingRight: 100
+  flexRow: {
+    flexDirection: "row",
   },
-});
-
-const stylesTextScreen = StyleSheet.create({
-  screen: {
+  input: {
+    borderColor: "#4630eb",
+    borderRadius: 4,
+    borderWidth: 1,
     flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    backgroundColor: '#fff',
-    flexDirection: "column"
+    height: 48,
+    margin: 16,
+    padding: 8,
   },
-  screenTextContainer: {
-    flexDirection: "row"
+  listArea: {
+    backgroundColor: "#f0f0f0",
+    flex: 1,
+    paddingTop: 16,
   },
-  languageContainer: {
-    width: "33%",
-    padding: 4,
-    flexGrow: 1
+  sectionContainer: {
+    marginBottom: 16,
+    marginHorizontal: 16,
   },
-  text: {
-    fontSize: 20
-  }
+  sectionHeading: {
+    fontSize: 18,
+    marginBottom: 8,
+  },
 });
