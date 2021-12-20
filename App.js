@@ -4,14 +4,23 @@ import Constants from "expo-constants";
 import * as SQLite from "expo-sqlite";
 
 export default function App() {
+    const [items, setItems] = React.useState(null);
  
-  const db = SQLite.openDatabase("table.db");
- 
-  return (
-    <Text>
-        Hello
-    </Text>
-  );
+    const db = SQLite.openDatabase("table.db");
+    
+    db.transaction((tx) => {
+        tx.executeSql(
+          `select * from text`,
+          [doneHeading ? 1 : 0],
+          (_, { rows: { _array } }) => setItems(_array)
+        );
+    });
+    
+    return (
+        <Text>
+            Hello
+        </Text>
+    );
 }
 
 const styles = StyleSheet.create({
