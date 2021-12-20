@@ -3,8 +3,6 @@ import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} fro
 import Constants from "expo-constants";
 import * as SQLite from "expo-sqlite";
 
-const db = openDatabase();
-
 export default function App() {
  
   const db = SQLite.openDatabase("table.db");
