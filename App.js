@@ -3,18 +3,32 @@ import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} fro
 import Constants from "expo-constants";
 import * as SQLite from "expo-sqlite";
 
+function dataHandler(transaction, results) {
+    for (var i=0; i<results.rows.length; i++) {
+        // Each row is a standard JavaScript array indexed by
+        // column names.
+        var row = results.rows.item(i);
+        string = string + row['name'] + " (ID "+row['id']+")\n";
+    }
+    alert(string);
+    setItems(results);
+    console.log(JSON.stringify(results));
+}
+
 export default function App() {
     const [items, setItems] = React.useState(null);
  
     const db = SQLite.openDatabase("table.db");
-    
+
     db.transaction((tx) => {
         tx.executeSql(
           `select * from text`,
-          [doneHeading ? 1 : 0],
-          (_, { rows: { _array } }) => setItems(_array)
+          [],
+          dataHandler
         );
     });
+    console.log("pppp11");
+    console.log(JSON.stringify(results);
     
     return (
         <Text>
