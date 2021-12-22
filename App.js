@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} from "react-native";
 import Constants from "expo-constants";
-import * as SQLite from "expo-sqlite";
+import * as SQLite from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system';
+import { Asset } from 'expo-asset';
 
 
 export default function App() {
     const [items, setItems] = React.useState(null);
  
-    const db = SQLite.openDatabase("table.db");
+    const FOO = 'table.db'
 
+    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+    };
+
+    await FileSystem.downloadAsync(
+        // the name 'foo.db' is hardcoded because it is used with require()
+        Asset.fromModule(require('../../asset/table.db')).uri,
+        // use constant FOO constant to access 'foo.db' whereever possible
+        FileSystem.documentDirectory + `SQLite/${FOO}`
+    );
+
+    const db = SQLite.openDatabase(FOO);
     db.transaction((tx) => {
         tx.executeSql(
-          `select * from text`,
+          `select * from Text`,
           [],
           (_, result) => {
             alert(result);
@@ -22,11 +36,9 @@ export default function App() {
         );
     });
 
-    console.log("xxxxx");
     return (
         <Text>Hello</Text>
-    )
-    
+    );  
 }
 
 const styles = StyleSheet.create({
