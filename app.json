@@ -15,7 +15,10 @@
     },
     "assetBundlePatterns": [
       "**/*",
-      "assets/**"
+      "assets/**",
+      "src/library/assets/**/*",
+      "src/library/databases/*",
+      "src/library/fonts/*"
     ],
     "packagerOpts": {
       "assetExts": ["db"]

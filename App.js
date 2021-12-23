@@ -8,21 +8,10 @@ import { Asset } from 'expo-asset';
 
 export default function App() {
     const [items, setItems] = React.useState(null);
- 
-    const FOO = 'table.db'
 
-    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
-    };
+    load();
 
-    await FileSystem.downloadAsync(
-        // the name 'foo.db' is hardcoded because it is used with require()
-        Asset.fromModule(require('../../asset/table.db')).uri,
-        // use constant FOO constant to access 'foo.db' whereever possible
-        FileSystem.documentDirectory + `SQLite/${FOO}`
-    );
-
-    const db = SQLite.openDatabase(FOO);
+    /*const db = SQLite.openDatabase('table.db');
     db.transaction((tx) => {
         tx.executeSql(
           `select * from Text`,
@@ -34,8 +23,54 @@ export default function App() {
               alert(err.message);
           }
         );
-    });
+    });*/
 
+    // Check if the directory where we are going to put the database exists
+    async function load(){
+      let dirInfo;
+      try {
+        console.log("check");
+        dirInfo = await FileSystem.getInfoAsync(`${FileSystem.documentDirectory}SQLite`);
+      } catch(err) { alert(err.message) };
+
+      if (!dirInfo.exists) {
+        alert("entering try");
+        try {
+          await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}SQLite`, { intermediates: true });
+        } catch(err) { Sentry.captureException(err) }
+      };
+
+      // Downloads the db from the original file
+      // The db gets loaded as read only
+      alert("opening");
+      FileSystem.downloadAsync(
+        Asset.fromModule(require('./databases/table.db')).uri,
+          `${FileSystem.documentDirectory}SQLite/table.db`
+        ).then(() => {
+        programsDB = SQLite.openDatabase(`table.db`); // We open our downloaded db
+        //loadDB(loaded); // We load the db into the persist store
+      }).then(() => {
+        alert("database opened");
+        console.log(programsDB);
+        programsDB.transaction((tx) => {
+          tx.executeSql(
+            `select * from Text`,
+            [],
+            (_, result) => {
+              alert(result.message);
+            },
+            (_, err) => {
+              alert(err.message);
+            }
+          );
+        })
+      })
+      .catch((err) => {
+        Sentry.captureException(err);
+        alert("caught exception")
+      });
+    }
+  
     return (
         <Text>Hello</Text>
     );  
