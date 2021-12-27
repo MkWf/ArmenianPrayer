@@ -10,22 +10,35 @@ export default function App() {
   const [items, setItems] = React.useState(null);
 
   const FOO = 'table.db'
-
   const loadDB = async () => {
     try {
+      console.log("222");
       if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
         await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
       };
       await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${FOO}`).
         then(() => {
+          console.log("Inside");
           const db = SQLite.openDatabase(FOO);  
-          alert("WORK");
-        });
-    } catch (error) {
-      alert("FAIL");
-      throw new Error(error);
-    }
+          db.transaction((tx) => {
+            tx.executeSql(
+              `select * from text`,
+              [],
+              (_, result) => {
+                alert(JSON.stringify(result));
+              },
+              (_, err) => {
+                  //alert(err.message);
+              });
+            });
+          });
+      } catch (error) {
+        alert("FAIL");
+        throw new Error(error);
+      }
   }
+
+  loadDB();
 
   return (
       <Text>Hello</Text>
