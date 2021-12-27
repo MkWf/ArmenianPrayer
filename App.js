@@ -7,38 +7,29 @@ import { Asset } from 'expo-asset';
 
 
 export default function App() {
-    const [items, setItems] = React.useState(null);
- 
-    const FOO = 'table.db'
+  const [items, setItems] = React.useState(null);
 
-    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
-    };
+  const FOO = 'table.db'
 
-    await FileSystem.downloadAsync(
-        // the name 'foo.db' is hardcoded because it is used with require()
-        Asset.fromModule(require('../../asset/table.db')).uri,
-        // use constant FOO constant to access 'foo.db' whereever possible
-        FileSystem.documentDirectory + `SQLite/${FOO}`
-    );
+  const loadDB = async () => {
+    try {
+      if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+        await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+      };
+      await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${FOO}`).
+        then(() => {
+          const db = SQLite.openDatabase(FOO);  
+          alert("WORK");
+        });
+    } catch (error) {
+      alert("FAIL");
+      throw new Error(error);
+    }
+  }
 
-    const db = SQLite.openDatabase(FOO);
-    db.transaction((tx) => {
-        tx.executeSql(
-          `select * from Text`,
-          [],
-          (_, result) => {
-            alert(result);
-          },
-          (_, err) => {
-              alert(err.message);
-          }
-        );
-    });
-
-    return (
-        <Text>Hello</Text>
-    );  
+  return (
+      <Text>Hello</Text>
+  );  
 }
 
 const styles = StyleSheet.create({
