@@ -1,79 +1,70 @@
 import React, { useState } from "react";
-import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} from "react-native";
+import {Platform,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View, useWindowDimensions} from "react-native";
 import Constants from "expo-constants";
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import HTML from 'react-native-render-html';
+
 
 
 export default function App() {
     const [items, setItems] = React.useState(null);
+    const { width } = useWindowDimensions();
+    const FOO = 'table.db'
 
-    load();
-
-    /*const db = SQLite.openDatabase('table.db');
-    db.transaction((tx) => {
-        tx.executeSql(
-          `select * from Text`,
-          [],
-          (_, result) => {
-            alert(result);
-          },
-          (_, err) => {
-              alert(err.message);
-          }
-        );
-    });*/
-
-    // Check if the directory where we are going to put the database exists
-    async function load(){
-      let dirInfo;
+    /*<tr>
+        <td align="left">
+            Պատարագ Հայաստանեայց Եկեղեցւոյ
+        </td>
+        <td align="left">
+            Badarak Hayasdanyayts Yegeghetsvo
+        </td>
+        <td align="left">
+            The Divine Liturgy of the Armenian Church
+        </td>
+    </tr>*/
+    const loadDB = async () => {
       try {
-        console.log("check");
-        dirInfo = await FileSystem.getInfoAsync(`${FileSystem.documentDirectory}SQLite`);
-      } catch(err) { alert(err.message) };
+        if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+          await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+        };
+        console.log("pre-entry");
 
-      if (!dirInfo.exists) {
-        alert("entering try");
-        try {
-          await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}SQLite`, { intermediates: true });
-        } catch(err) { Sentry.captureException(err) }
-      };
-
-      // Downloads the db from the original file
-      // The db gets loaded as read only
-      alert("opening");
-      FileSystem.downloadAsync(
-        Asset.fromModule(require('./databases/table.db')).uri,
-          `${FileSystem.documentDirectory}SQLite/table.db`
-        ).then(() => {
-        programsDB = SQLite.openDatabase(`table.db`); // We open our downloaded db
-        //loadDB(loaded); // We load the db into the persist store
-      }).then(() => {
-        alert("database opened");
-        console.log(programsDB);
-        programsDB.transaction((tx) => {
-          tx.executeSql(
-            `select * from Text`,
-            [],
-            (_, result) => {
-              alert(result.message);
-            },
-            (_, err) => {
-              alert(err.message);
-            }
-          );
-        })
-      })
-      .catch((err) => {
-        Sentry.captureException(err);
-        alert("caught exception")
-      });
+        await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${FOO}`).
+          then(() => {
+            const db = SQLite.openDatabase(FOO);
+            db.transaction((tx) => {
+              tx.executeSql(
+                `select * from text`,
+                [],
+                (_, result) => {
+                  //console.log(result); //whole thing
+                 // console.log(result.rows._array); //objects only
+                  console.log(result.rows.item);
+                },
+                (_, err) => {
+                    console.log("error");
+                });
+              });
+            });
+        } catch (error) {
+          alert("FAIL");
+          console.log("fail");
+          throw new Error(error);
+        }
     }
-  
+
+    loadDB();
+
     return (
-        <Text>Hello</Text>
-    );  
+      <ScrollView style={styles.container}>
+        <Text>123</Text>
+        <HTML source={{html}} contentWidth={width} />
+      </ScrollView>
+    );
+
+    
 }
 
 const styles = StyleSheet.create({
@@ -113,3 +104,78 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
+
+const html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+    <style type="text/css">
+        table
+        {
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-collapse: collapse;
+        }
+        
+        table tr
+        {
+            background-color: white;
+        }
+        
+        table tr.header
+        {
+            background-color: #DDDDDD;
+        }
+        
+        table tr.title
+        {
+            background-color: #EEEEEE;
+        }
+        
+        table tr td
+        {
+            padding: 0px 3px 0px 3px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #666666;
+        }
+        
+        table tr td.null
+        {
+            color: #999999;
+            text-align: center;
+            padding: 0px 3px 0px 3px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #666666;
+        }
+        
+        table tr td.separator
+        {
+            padding: 0px 3px 0px 3px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #666666;
+            background-color: #DDDDDD;
+        }
+        
+        table tr td.rownum
+        {
+            padding: 0px 3px 0px 3px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #666666;
+            background-color: #DDDDDD;
+            text-align: right;
+        }
+    </style>
+    <body>
+        <table>
+            <tr class="title">
+                <td colspan="3" align="center"></td>
+            </tr>
+        </table>
+        <br/><br/>
+    </body>
+</html>
+`;
+
