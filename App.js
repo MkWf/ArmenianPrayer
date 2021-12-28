@@ -29,7 +29,6 @@ export default function App() {
         if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
           await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
         };
-        console.log("pre-entry");
 
         await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${FOO}`).
           then(() => {
@@ -41,7 +40,15 @@ export default function App() {
                 (_, result) => {
                   //console.log(result); //whole thing
                  // console.log(result.rows._array); //objects only
-                  console.log(result.rows.item);
+                 const resultRows = result.rows._array;
+                 let i = 0;
+                 console.log(resultRows[i]);
+                 console.log(html);
+                 for(;resultRows[i];){
+                   html += resultRows[i];
+                   i++;
+                   console.log(html);
+                 }
                 },
                 (_, err) => {
                     console.log("error");
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+let html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
     <style type="text/css">
         table
@@ -173,9 +180,5 @@ const html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.or
             <tr class="title">
                 <td colspan="3" align="center"></td>
             </tr>
-        </table>
-        <br/><br/>
-    </body>
-</html>
 `;
 
