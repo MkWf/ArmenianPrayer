@@ -116,7 +116,8 @@ export default function App() {
                   for(i=0; result.rows._array.length; i++){
                     console.log(i);
                     rowString = '<tr><td align="left">';
-                    rowObject = result.rows._array[i];
+                    console.log(rowString);
+                    rowObject = result.rows._array[0];
                     rowString += rowObject['Ar'];
                     rowString += '</td><td align="left"';
                     rowString += rowObject['Tr'];
