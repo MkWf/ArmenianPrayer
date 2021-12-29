@@ -109,23 +109,23 @@ export default function App() {
                 `select * from text`,
                 [], 
                 (_, result) => {
-                  let i;
-                  let rowString;
+                  let i = 0;
+                  let rowString = null;
                   let rowObject;
-                  console.log("enter");
-                  for(i=0; result.rows._array.length; i++){
-                    console.log(i);
+                  rowString = result.rows._array[0];
+                  alert(rowString[0]);
+                  /*for(i=1; 10; i++){
                     rowString = '<tr><td align="left">';
-                    console.log(rowString);
-                    rowObject = result.rows._array[0];
+                    //alert(rowString);
+                    rowObject = result.rows._array[6];
+                    alert(rowObject[1]);
                     rowString += rowObject['Ar'];
                     rowString += '</td><td align="left"';
                     rowString += rowObject['Tr'];
                     rowString += '</td><td align="left"';
                     rowString += rowObject['En'];
                     rowString += '</td></tr>';
-                    console.log(rowString);
-                  }
+                  }*/
                 }, 
                 (_, err) => {
                     console.log("error");
