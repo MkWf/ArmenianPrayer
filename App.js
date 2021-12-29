@@ -81,6 +81,7 @@ export default function App() {
             <tr class="title">
                 <td colspan="3" align="center"></td>
             </tr>
+            <tr><td align="left">Պատարագ Հայաստանեայց Եկեղեցւոյ</td><td align="left">Badarak Hayasdanyayts Yegeghetsvo</td><td align="left">The Divine Liturgy of the Armenian Church</td></tr></table><br/><br/></body></html>
 `;
 
     /*<tr>
@@ -113,7 +114,10 @@ export default function App() {
                   let rowString = null;
                   let rowObject;
                   rowString = result.rows._array[0];
-                  alert(rowString[0]);
+                  //html += '<tr><td align="left">Պատարագ Հայաստանեայց Եկեղեցւոյ</td><td align="left">Badarak Hayasdanyayts Yegeghetsvo</td><td align="left">The Divine Liturgy of the Armenian Church</td></tr>'
+                  //html += rowString['Ar'];
+                  //html += '<tr><td align="left">Պատարագ Հայաստանեայց Եկեղեցւոյ</td><td align="left">Badarak Hayasdanyayts Yegeghetsvo</td><td align="left">The Divine Liturgy of the Armenian Church</td></tr></table><br/><br/></body></html>'
+                  //alert(html);
                   /*for(i=1; 10; i++){
                     rowString = '<tr><td align="left">';
                     //alert(rowString);
@@ -129,6 +133,12 @@ export default function App() {
                 }, 
                 (_, err) => {
                     console.log("error");
+                }).then(() => {
+                  return (
+                    <ScrollView style={styles.container}>
+                      <HTML source={{html}} contentWidth={width} />
+                    </ScrollView>
+                  );
                 });
               });
             }); 
@@ -141,16 +151,11 @@ export default function App() {
 
     loadDB();
 
-
-
     return (
       <ScrollView style={styles.container}>
-        <Text>123</Text>
         <HTML source={{html}} contentWidth={width} />
       </ScrollView>
     );
-
-    
 }
 
 const styles = StyleSheet.create({
