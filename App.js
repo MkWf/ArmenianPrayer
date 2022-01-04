@@ -101,17 +101,20 @@ export default function App() {
                   let rowObject;
                   for(i=0; 10; i++){
                     alert("in");
-                    console.log(i);
-                    rowString = '<tr><td align="left">';
-                    console.log(rowString);
-                    rowObject = result.rows._array[0];
+                    /*
+                    rowObject = result.rows._array[i];
+                    rowString = '<tr>';
+                    rowString += '<td align="left">';
                     rowString += rowObject['Ar'];
-                    rowString += '</td><td align="left"';
+                    rowString += '</td>';
+                    rowString += '<td align="left"';
                     rowString += rowObject['Tr'];
-                    rowString += '</td><td align="left"';
+                    rowString += '</td>';
+                    rowString += '<td align="left"';
                     rowString += rowObject['En'];
-                    rowString += '</td></tr>';
-                    console.log(rowString);
+                    rowString += '</td>';
+                    rowString += '</tr>';
+                    */
                   }
                 }, 
                 (_, err) => {
