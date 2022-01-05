@@ -97,13 +97,11 @@ export default function App() {
                 [], 
                 (_, result) => {
                   let i;
-                  let rowString;
+                  let rowString = html;
                   let rowObject;
-                  for(i=0; 10; i++){
-                    alert("in");
-                    /*
+                  for(i=0; i < result.rows._array.length; i++){
                     rowObject = result.rows._array[i];
-                    rowString = '<tr>';
+                    rowString += '<tr>';
                     rowString += '<td align="left">';
                     rowString += rowObject['Ar'];
                     rowString += '</td>';
@@ -114,8 +112,12 @@ export default function App() {
                     rowString += rowObject['En'];
                     rowString += '</td>';
                     rowString += '</tr>';
-                    */
                   }
+                  rowString += '</table>';
+                  rowString += '<br/><br/>';
+                  rowString += '</body>';
+                  rowString += '</html>';
+                  alert(rowString);
                 }, 
                 (_, err) => {
                     console.log("error");
