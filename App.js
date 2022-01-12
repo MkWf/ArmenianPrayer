@@ -102,7 +102,8 @@ export default function App() {
                     let rowStrings = liturgy;
                     let rowObject;
                     
-                    for(i=0; i < result.rows._array.length; i++){
+                    alert("in");
+                    for(i=0; i < 1; i++){
                       rowObject = result.rows._array[i];
                       rowStrings += `<tr> <td align="left">`;
                       rowStrings += rowObject['Ar'];
@@ -112,8 +113,8 @@ export default function App() {
                       rowStrings += rowObject['En'];
                       rowStrings += `</td> </tr>`;
                     }
-                    rowString += `</table> <br/><br/> </body>`;
-                    liturgy = rowString;
+                    rowStrings += `</table> <br/><br/> </body>`;
+                    liturgy = rowStrings;
                     setHTML(liturgy);
                   }, 
                   (_, err) => {
@@ -134,6 +135,7 @@ export default function App() {
   
     return (
       <ScrollView style={styles.container}>
+        <Text> 1234 </Text>
         <HTML source={{html: textHtml}} contentWidth={width} />
       </ScrollView>
     );
