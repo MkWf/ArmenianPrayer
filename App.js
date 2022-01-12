@@ -5,82 +5,13 @@ import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
 import HTML from 'react-native-render-html';
+import * as BaseLiturgy from './constants/liturgyBaseHTML';
 
 export default function App() {
-    const [items, setItems] = React.useState(null);
     const [textHtml, setHTML] = React.useState('');
     const [isDbLoad, setDbLoad] = React.useState(false);
     const { width } = useWindowDimensions();
     const dbFile = 'table.db';
-
-    let liturgy = `
-          <style type="text/css">
-              table
-              {
-                  border-style: solid;
-                  border-width: 1px;
-                  border-color: black;
-                  border-collapse: collapse;
-              }
-              
-              table tr
-              {
-                  background-color: white;
-              }
-              
-              table tr.header
-              {
-                  background-color: #DDDDDD;
-              }
-              
-              table tr.title
-              {
-                  background-color: #EEEEEE;
-              }
-              
-              table tr td
-              {
-                  padding: 0px 3px 0px 3px;
-                  border-style: solid;
-                  border-width: 1px;
-                  border-color: #666666;
-              }
-              
-              table tr td.null
-              {
-                  color: #999999;
-                  text-align: center;
-                  padding: 0px 3px 0px 3px;
-                  border-style: solid;
-                  border-width: 1px;
-                  border-color: #666666;
-              }
-              
-              table tr td.separator
-              {
-                  padding: 0px 3px 0px 3px;
-                  border-style: solid;
-                  border-width: 1px;
-                  border-color: #666666;
-                  background-color: #DDDDDD;
-              }
-              
-              table tr td.rownum
-              {
-                  padding: 0px 3px 0px 3px;
-                  border-style: solid;
-                  border-width: 1px;
-                  border-color: #666666;
-                  background-color: #DDDDDD;
-                  text-align: right;
-              }
-          </style>
-          <body>
-              <table>
-                  <tr class="title">
-                      <td colspan="3" align="center"></td>
-                  </tr>
-      `;
 
     const loadDB = async () => {
       if(!isDbLoad){
@@ -99,7 +30,7 @@ export default function App() {
                   [], 
                   (_, result) => {
                     let i;
-                    let rowStrings = liturgy;
+                    let rowStrings = BaseLiturgy.liturgyHTML;
                     let rowObject;
                     
                     for(i=0; i < result.rows._array.length; i++){
@@ -134,6 +65,7 @@ export default function App() {
   
     return (
       <ScrollView style={styles.container}>
+        <Text> 123</Text>
         <HTML source={{html: textHtml}} contentWidth={width} />
       </ScrollView>
     );
