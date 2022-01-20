@@ -20,19 +20,11 @@ export default function App() {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="HomeScreen">
           <Stack.Screen name="HomeScreen" component={FoundationReleaseScreen.FoundationReleaseScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
-
-    function HomeScreen({navigation}) {
-      return (
-        <View style={Foun.screen}>
-          <Text> 123 </Text>
-        </View>
-      );
-    }
 }
 
 const stylesHomeScreen = StyleSheet.create({
