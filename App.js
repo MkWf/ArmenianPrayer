@@ -8,7 +8,7 @@ import HTML from 'react-native-render-html';
 import * as BaseLiturgy from './constants/liturgyBaseHTML';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as FoundationReleaseScreen from './FoundationReleaseScreen';
+import * as MainScreen from './MainScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,8 +20,8 @@ export default function App() {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="HomeScreen">
-          <Stack.Screen name="HomeScreen" component={FoundationReleaseScreen.FoundationReleaseScreen} />
+        <Stack.Navigator initialRouteName="Armenian Prayer">
+          <Stack.Screen name="Armenian Prayer" component={MainScreen.MainScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
