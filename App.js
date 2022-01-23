@@ -53,6 +53,7 @@ export default function App() {
       <Drawer.Navigator
         // For setting Custom Sidebar Menu
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+        
         <Drawer.Screen
           name="FirstPage"
           options={{
