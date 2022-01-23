@@ -11,63 +11,36 @@ const CustomSidebarMenu = (props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        {state.routes.map((route) => {
-          const { drawerLabel, activeTintColor, groupName } = descriptors[
-            route.key
-          ].options;
-          if (lastGroupName !== groupName) {
-            newGroup = true;
-            lastGroupName = groupName;
-          } else newGroup = false;
-          return (
-            <>
-              {newGroup ? (
-                <View style={styles.mainContainer}>
-                    <Text style={{fontSize:30, marginLeft:20, marginBottom:20}}>Settings</Text>
+        <View style={styles.mainContainer}>
+            <Text style={{fontSize:30, marginLeft:20, marginBottom:20}}>Settings</Text>
 
-                    <Text style={styles.sectionText}>Display Languages</Text>
-                    <View style={styles.itemsRow}>
-                        <View style={styles.card}>
-                            <Text>English</Text>
-                        </View>
-                            
-                        <View style={styles.card}>
-                            <Text>հայերեն</Text>
-                        </View>
-                    </View>
-
-                     <View style={styles.itemsRow}>
-                        <View style={styles.card}>
-                            <Text>Hayeren</Text>
-                        </View>
-                            
-                        <View style={styles.card}>
-                            <Text>All</Text>
-                        </View>
-                    </View>
-
-                    <Text style={styles.sectionText}>Presentation Mode</Text>
-                    <View style={{flexDirection:"row"}}>
-
-                        </View>
-                    <Text style={styles.sectionText}>Screen Orientation</Text>
+            <Text style={styles.sectionText}>Display Languages</Text>
+            <View style={styles.itemsRow}>
+                <View style={styles.card}>
+                    <Text>English</Text>
                 </View>
-              ) : null}
-              <DrawerItem
-                key={route.key}
-                label={({ color }) => (
-                  <Text style={{ color }}>{drawerLabel}</Text>
-                )}
-                focused={
-                  state.index ===
-                  state.routes.findIndex((e) => e.name === route.name)
-                }
-                activeTintColor={activeTintColor}
-                onPress={() => navigation.navigate(route.name)}
-              />
-            </>
-          );
-        })}
+                    
+                <View style={styles.card}>
+                    <Text>հայերեն</Text>
+                </View>
+            </View>
+
+                <View style={styles.itemsRow}>
+                <View style={styles.card}>
+                    <Text>Hayeren</Text>
+                </View>
+                    
+                <View style={styles.card}>
+                    <Text>All</Text>
+                </View>
+            </View>
+
+            <Text style={styles.sectionText}>Presentation Mode</Text>
+            <View style={{flexDirection:"row"}}>
+
+                </View>
+            <Text style={styles.sectionText}>Screen Orientation</Text>
+        </View>
       </DrawerContentScrollView>
     </SafeAreaView>
   );

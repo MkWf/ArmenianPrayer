@@ -53,15 +53,8 @@ export default function App() {
       <Drawer.Navigator
         // For setting Custom Sidebar Menu
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-        
         <Drawer.Screen
           name="FirstPage"
-          options={{
-            drawerLabel: 'First page Option',
-            // Section/Group Name
-            groupName: 'Display Languages',
-            activeTintColor: '#e91e63',
-          }}
           component={firstScreenStack}
         />
         <Drawer.Screen
