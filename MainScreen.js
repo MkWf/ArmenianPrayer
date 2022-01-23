@@ -1,7 +1,11 @@
+import 'react-native-gesture-handler';
 import React from "react";
 import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
+const Drawer = createDrawerNavigator();
 
 export function MainScreen({navigation}) {
     return (
