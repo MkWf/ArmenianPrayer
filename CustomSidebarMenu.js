@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
@@ -16,23 +16,23 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-                <View style={styles.card}>
+                <TouchableOpacity style={styles.card}>
                     <Text>English</Text>
-                </View>
+                </TouchableOpacity>
                     
-                <View style={styles.card}>
+                <TouchableOpacity style={styles.card}>
                     <Text>հայերեն</Text>
-                </View>
+                </TouchableOpacity>
             </View>
 
                 <View style={styles.itemsRow}>
-                <View style={styles.card}>
+                <TouchableOpacity style={styles.card}>
                     <Text>Hayeren</Text>
-                </View>
+                </TouchableOpacity>
                     
-                <View style={styles.card}>
+                <TouchableOpacity style={styles.card}>
                     <Text>All</Text>
-                </View>
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.sectionText}>Presentation Mode</Text>
