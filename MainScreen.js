@@ -1,46 +1,54 @@
 import 'react-native-gesture-handler';
 import React from "react";
-import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert} from "react-native";
+import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity} from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FirstPage from './FirstPage';
+import CustomSidebarMenu from './CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
+const NavigationDrawerStructure = (props) => {
+    //Structure for the navigatin Drawer
+    const toggleDrawer = () => {
+      //Props to open/close the drawer
+      props.navigationProps.toggleDrawer();
+    };
+  
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity onPress={toggleDrawer}>
+          {/*Donute Button Image */}
+          <Image
+            source={{
+              uri:
+                'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
+            }}
+            style={{ width: 25, height: 25, marginLeft: 5 }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
 export function MainScreen({navigation}) {
+    
     return (
-         <View style={styles.container}>
-            <Card style={styles.cardMain}> 
-                <Card.Content>
-                    <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
-                    <Text>There's just liturgy for now but more will be coming soon!{"\n"}</Text>
-                    <Text style={{color:"#FFA500"}} onPress={() => Alert.alert("Pushed")}>Read about upcoming features ></Text>
-                </Card.Content>
-            </Card>
-
-            <Card style={styles.cardSecond}> 
-                <Card.Content>
-                    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                    <Text>{"\n"}Time to Pray!{"\n"}</Text>
-                    <Text style={{fontWeight:"bold", fontSize:20}}>The Divine Liturgy {"\n"}</Text>
-                    <Paragraph>We pray the liturgy every Sunday to celebrate new life in Jesus</Paragraph>
-                </Card.Content>
-            </Card>
-        </View> 
-        
-       /* <SafeAreaView style={styles.container}>
-                <Text style={styles.paragraph}>
-                    Welcome to the Armenian Prayer App 
-                    There's just liturgy for now but more will be coming soon!
-                    Read about upcoming features >
-                </Text>
-                <Image source={require('./assets/Gomidas.png')}></Image>
-                <Text style={styles.paragraph}>
-                    Time to Pray! 
-                    The Divine Liturgy
-                    We pray the liturgy every Sunday to celebrate new life in Jesus 
-                </Text>
-        </SafeAreaView>*/
+        <Drawer.Navigator
+            drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+            <Drawer.Screen
+                name="FirstPage"
+                options={{
+                    drawerLabel: 'First page Option',
+                groupName: 'Display Languages',
+                activeTintColor: '#e91e63',
+          }}
+          component={firstScreenStack}
+        />
+      </Drawer.Navigator>
     );
 }
 
@@ -81,3 +89,27 @@ const styles = StyleSheet.create({
       color: '#34495e',
     },
 });
+
+function firstScreenStack({ navigation }) {
+    return (
+      <Stack.Navigator initialRouteName="FirstPage">
+        <Stack.Screen
+          name="FirstPage"
+          component={FirstPage}
+          options={{
+            title: 'First Page', //Set Header Title
+            headerLeft: () => (
+              <NavigationDrawerStructure navigationProps={navigation} />
+            ),
+            headerStyle: {
+              backgroundColor: '#f4511e', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
+        />
+      </Stack.Navigator>
+    );
+  }

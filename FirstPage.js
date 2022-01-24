@@ -1,23 +1,30 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
 const FirstPage = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, padding: 16 }}>
-        <View style={styles.container}>
-          <Text style={styles.textStyle}>
-            React Navigation Drawer with Sectioned Menu Options & Footer
-            {'\n\n'}
-            This is the First Page
-          </Text>
-        </View>
-        <Text style={styles.footerHeading}>
-          React Navigation Drawer with Sectioned Menu
-        </Text>
-        <Text style={styles.footerText}>www.aboutreact.com</Text>
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+        <Card style={styles.cardMain}> 
+            <Card.Content>
+                <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
+                <Text>There's just liturgy for now but more will be coming soon!{"\n"}</Text>
+                <Text style={{color:"#FFA500"}} onPress={() => Alert.alert("Pushed")}>Read about upcoming features ></Text>
+            </Card.Content>
+        </Card>
+
+        <Card style={styles.cardSecond}> 
+            <Card.Content>
+                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                <Text>{"\n"}Time to Pray!{"\n"}</Text>
+                <Text style={{fontWeight:"bold", fontSize:20}}>The Divine Liturgy {"\n"}</Text>
+                <Paragraph>We pray the liturgy every Sunday to celebrate new life in Jesus</Paragraph>
+            </Card.Content>
+        </Card>
+    </View> 
   );
 };
 
@@ -25,21 +32,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5f5dd',
+    justifyContent: "space-evenly"
   },
-  textStyle: {
+  cardMain: {
+      padding: 0, 
+      margin: 0,
+      elevation: 4,
+      width: '85%',
+      alignItems: "center",
+      justifyContent: "center"
+  },
+  cardSecond: {
+      elevation: 4,
+      width: '85%'
+  },
+  cardImage: {
+      width: '100%',
+      height: 100
+  },
+  cardTitle: {
+      fontWeight: "bold",
+      fontSize: 24
+  },
+  cardSubtext: {
+      fontSize: 16,
+  },
+  paragraph: {
     fontSize: 18,
+    fontWeight: 'bold',
     textAlign: 'center',
-  },
-  footerHeading: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  footerText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: 'grey',
+    color: '#34495e',
   },
 });
 
