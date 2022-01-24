@@ -20,26 +20,9 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const NavigationDrawerStructure = (props) => {
-  //Structure for the navigatin Drawer
   const toggleDrawer = () => {
-    //Props to open/close the drawer
     props.navigationProps.toggleDrawer();
   };
-
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={toggleDrawer}>
-        {/*Donute Button Image */}
-        <Image
-          source={{
-            uri:
-              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
-          }}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
-        />
-      </TouchableOpacity>
-    </View>
-  );
 };
 
 export default function App() {
@@ -50,8 +33,8 @@ export default function App() {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Armenian Prayer">
-          <Stack.Screen name="Armenian Prayer" component={MainScreen.MainScreen} />
+        <Stack.Navigator initialRouteName="Armenian Prayer1" screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Armenian Prayer" component={MainScreen.MainScreen } />  
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -65,56 +48,5 @@ const stylesHomeScreen = StyleSheet.create({
   }
 });
 
-
-function firstScreenStack({ navigation }) {
-  return (
-    <Stack.Navigator initialRouteName="FirstPage">
-      <Stack.Screen
-        name="FirstPage"
-        component={FirstPage}
-        options={{
-          title: 'First Page', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#f4511e', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function secondScreenStack({ navigation }) {
-  return (
-    <Stack.Navigator
-      initialRouteName="SecondPage"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerStyle: {
-          backgroundColor: '#f4511e', //Set Header color
-        },
-        headerTintColor: '#fff', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}>
-      <Stack.Screen
-        name="SecondPage"
-        component={SecondPage}
-        options={{
-          title: 'Second Page', //Set Header Title
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
 
 
