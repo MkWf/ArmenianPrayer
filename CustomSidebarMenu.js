@@ -69,13 +69,9 @@ const CustomSidebarMenu = (props) => {
             <Text style={styles.sectionText}>Presentation Mode</Text>
             <View style={styles.itemsRow}>
               <TouchableOpacity style={styles.slideInactive} >
-                <View style={{flex:1, backgroundColor:'red'}}></View>
-                <Text style={{flex:1>Scroll</Text>
-                <View style={{flex: 1, backgroundColor:'red'}}></View>
-              </TouchableOpacity>
-                  
-              <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} >
-                  <Text style={{backgroundColor:'red'}}>Slideshow</Text>
+                <View style={styles.scrollSides}></View>
+                <Text style={{flex:3, alignSelf:"center", backgroundColor:"#808080"}}>Scroll</Text>
+                <View style={styles.scrollSides}></View>
               </TouchableOpacity>
             </View>
 
@@ -143,6 +139,11 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
+    flexDirection: 'row'
+  },
+  scrollSides: {
+    backgroundColor: "#ccc",
+    flex: 1
   }
 });
 
