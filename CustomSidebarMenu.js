@@ -21,17 +21,35 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-                <TouchableOpacity style={[engLang ? styles.cardActive : styles.cardInactive]} onPress={() => setEngLang(!engLang)}>
+                <TouchableOpacity style={[engLang ? styles.cardActive : styles.cardInactive]} 
+                onPress={() => {
+                  setEngLang(!engLang);
+                  if(engLang == false){
+                    setAllLang(false);
+                  }
+                  }}>
                     <Text>English</Text>
                 </TouchableOpacity>
                     
-                <TouchableOpacity style={[armLang ? styles.cardActive : styles.cardInactive]} onPress={() => setArmLang(!armLang)}>
+                <TouchableOpacity style={[armLang ? styles.cardActive : styles.cardInactive]} 
+                 onPress={() => {
+                  setArmLang(!armLang);
+                  if(armLang == false){
+                    setAllLang(false);
+                  }
+                  }}>
                     <Text>հայերեն</Text>
                 </TouchableOpacity>
             </View>
 
                 <View style={styles.itemsRow}>
-                <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} onPress={() => setTraLang(!traLang)}>
+                <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} 
+                 onPress={() => { 
+                  setTraLang(!traLang);
+                  if(traLang == false){
+                    setAllLang(false);
+                  }
+                  }}>
                     <Text>Hayeren</Text>
                 </TouchableOpacity>
                     
@@ -39,9 +57,9 @@ const CustomSidebarMenu = (props) => {
                   onPress={() => {
                     setAllLang(!allLang);
                     if(allLang == false){
-                      setArmLang(false), 
-                      setEngLang(false), 
-                      setTraLang(false)
+                      setArmLang(false); 
+                      setEngLang(false); 
+                      setTraLang(false);
                     }
                   }}>
                     <Text>All</Text>
