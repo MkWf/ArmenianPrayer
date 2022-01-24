@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -8,6 +8,11 @@ const CustomSidebarMenu = (props) => {
   let lastGroupName = '';
   let newGroup = true;
 
+  const [allLang, setAllLang] = React.useState(true);
+  const [engLang, setEngLang] = React.useState(false);
+  const [armLang, setArmLang] = React.useState(false);
+  const [traLang, setTraLang] = React.useState(false);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -16,7 +21,7 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity style={styles.card} onPress={}>
                     <Text>English</Text>
                 </TouchableOpacity>
                     
@@ -62,9 +67,9 @@ const styles = StyleSheet.create({
   },
   card: {
     shadowColor: 'black',
-    shadowRadius: 1,
-    shadowOpacity: 1,
-    elevation: 1,
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
