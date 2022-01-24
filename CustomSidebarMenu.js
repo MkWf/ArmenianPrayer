@@ -42,34 +42,43 @@ const CustomSidebarMenu = (props) => {
                 </TouchableOpacity>
             </View>
 
-                <View style={styles.itemsRow}>
-                <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} 
-                 onPress={() => { 
-                  setTraLang(!traLang);
-                  if(traLang == false){
-                    setAllLang(false);
+            <View style={styles.itemsRow}>
+              <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} 
+                onPress={() => { 
+                setTraLang(!traLang);
+                if(traLang == false){
+                  setAllLang(false);
+                }
+                }}>
+                  <Text>Hayeren</Text>
+              </TouchableOpacity>
+                  
+              <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} 
+                onPress={() => {
+                  setAllLang(!allLang);
+                  if(allLang == false){
+                    setArmLang(false); 
+                    setEngLang(false); 
+                    setTraLang(false);
                   }
-                  }}>
-                    <Text>Hayeren</Text>
-                </TouchableOpacity>
-                    
-                <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} 
-                  onPress={() => {
-                    setAllLang(!allLang);
-                    if(allLang == false){
-                      setArmLang(false); 
-                      setEngLang(false); 
-                      setTraLang(false);
-                    }
-                  }}>
-                    <Text>All</Text>
-                </TouchableOpacity>
+                }}>
+                  <Text>All</Text>
+              </TouchableOpacity>
             </View>
 
             <Text style={styles.sectionText}>Presentation Mode</Text>
-            <View style={{flexDirection:"row"}}>
+            <View style={styles.itemsRow}>
+              <TouchableOpacity style={styles.slideInactive} >
+                <View style={{flex:1, backgroundColor:'red'}}></View>
+                <Text style={{flex:1>Scroll</Text>
+                <View style={{flex: 1, backgroundColor:'red'}}></View>
+              </TouchableOpacity>
+                  
+              <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} >
+                  <Text style={{backgroundColor:'red'}}>Slideshow</Text>
+              </TouchableOpacity>
+            </View>
 
-                </View>
             <Text style={styles.sectionText}>Screen Orientation</Text>
         </View>
       </DrawerContentScrollView>
@@ -120,6 +129,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 10,
     alignItems:"center"
+  },
+  slideInactive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
   }
 });
 
