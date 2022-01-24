@@ -21,21 +21,29 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-                <TouchableOpacity style={styles.card} onPress={}>
+                <TouchableOpacity style={[engLang ? styles.cardActive : styles.cardInactive]} onPress={() => setEngLang(!engLang)}>
                     <Text>English</Text>
                 </TouchableOpacity>
                     
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity style={[armLang ? styles.cardActive : styles.cardInactive]} onPress={() => setArmLang(!armLang)}>
                     <Text>հայերեն</Text>
                 </TouchableOpacity>
             </View>
 
                 <View style={styles.itemsRow}>
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} onPress={() => setTraLang(!traLang)}>
                     <Text>Hayeren</Text>
                 </TouchableOpacity>
                     
-                <TouchableOpacity style={styles.card}>
+                <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} 
+                  onPress={() => {
+                    setAllLang(!allLang);
+                    if(allLang == false){
+                      setArmLang(false), 
+                      setEngLang(false), 
+                      setTraLang(false)
+                    }
+                  }}>
                     <Text>All</Text>
                 </TouchableOpacity>
             </View>
@@ -65,12 +73,27 @@ const styles = StyleSheet.create({
     flexDirection:"row", 
     justifyContent:"space-evenly"
   },
-  card: {
+  cardInactive: {
     shadowColor: 'black',
     shadowRadius: 200,
     shadowOpacity: 100,
     elevation: 3,
     backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    alignItems:"center"
+  },
+  cardActive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 10,
     flex: 1,
