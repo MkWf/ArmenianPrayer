@@ -89,9 +89,7 @@ const CustomSidebarMenu = (props) => {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.landscapeInactive} >
-                <View style={styles.scrollSides}></View>
                 <Text style={styles.landscapeText}>Landscape</Text>
-                <View style={styles.scrollSides}></View>
               </TouchableOpacity>
             </View>
         </View>
@@ -184,9 +182,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 10,
-    flexDirection: 'row', 
-    justifyContent: 'space-evenly'
+    marginBottom: 10
   },
   landscapeInactive: {
     shadowColor: 'black',
@@ -199,9 +195,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 10,
-    flexDirection: 'row', 
-    justifyContent: 'space-evenly'
+    marginBottom: 10
   },
   scrollSides: {
     flex: 1
@@ -234,12 +228,10 @@ const styles = StyleSheet.create({
     paddingLeft: 30
   },
   landscapeText: {
-    flex:1, 
-    alignSelf:"center", 
-    backgroundColor:"#C0C0C0", 
+    backgroundColor: '#C0C0C0',
+    marginTop: 15,
+    marginBottom: 15,
     textAlign: 'center',
-    paddingLeft: 30,
-    paddingBottom: 30
   },
   portraitText: {
     flex:1, 
