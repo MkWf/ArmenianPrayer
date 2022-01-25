@@ -68,14 +68,32 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Presentation Mode</Text>
             <View style={styles.itemsRow}>
+              <TouchableOpacity style={styles.scrollInactive} >
+                <View style={styles.scrollSides}></View>
+                <Text style={styles.scrollCenter}>Scroll</Text>
+                <View style={styles.scrollSides}></View>
+              </TouchableOpacity>
+
               <TouchableOpacity style={styles.slideInactive} >
-                <View style={styles.scrollSides}></View>
-                <Text style={{flex:3, alignSelf:"center", backgroundColor:"#808080"}}>Scroll</Text>
-                <View style={styles.scrollSides}></View>
+                <Text style={styles.slideBoxNonText}></Text>
+                <Text style={styles.slideBoxNonText}></Text>
+                <Text style={styles.slideBoxNonText}></Text>
+                <Text style={styles.slideshowText}>Slideshow</Text>
               </TouchableOpacity>
             </View>
 
             <Text style={styles.sectionText}>Screen Orientation</Text>
+            <View style={styles.itemsRow}>
+              <TouchableOpacity style={styles.portraitInactive} >
+                <Text style={styles.portraitText}>Portrait</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.landscapeInactive} >
+                <View style={styles.scrollSides}></View>
+                <Text style={styles.landscapeText}>Landscape</Text>
+                <View style={styles.scrollSides}></View>
+              </TouchableOpacity>
+            </View>
         </View>
       </DrawerContentScrollView>
     </SafeAreaView>
@@ -126,13 +144,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems:"center"
   },
-  slideInactive: {
+  scrollInactive: {
     shadowColor: 'black',
     shadowRadius: 200,
     shadowOpacity: 100,
     elevation: 3,
     backgroundColor: 'white',
-    padding: 10,
     borderRadius: 10,
     flex: 1,
     marginTop: 10,
@@ -141,9 +158,96 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row'
   },
+  slideInactive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly'
+  },
+  portraitInactive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly'
+  },
+  landscapeInactive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly'
+  },
   scrollSides: {
-    backgroundColor: "#ccc",
     flex: 1
+  },
+  scrollCenter: {
+    flex:3, 
+    alignSelf:"center", 
+    backgroundColor:"#C0C0C0", 
+    textAlign: 'center',
+    paddingTop: 30,
+    paddingBottom: 30
+  },
+  slideBoxText: {
+    flex:1, 
+    alignSelf:"center", 
+    backgroundColor:"#C0C0C0", 
+    textAlign: "center"
+  },
+  slideBoxNonText: { 
+    flex: 1,
+    backgroundColor:"#C0C0C0",
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5
+  },
+  slideshowText: {
+    alignSelf: "center",
+    position: 'absolute',
+    paddingLeft: 30
+  },
+  landscapeText: {
+    flex:1, 
+    alignSelf:"center", 
+    backgroundColor:"#C0C0C0", 
+    textAlign: 'center',
+    paddingLeft: 30,
+    paddingBottom: 30
+  },
+  portraitText: {
+    flex:1, 
+    alignSelf:"center", 
+    backgroundColor:"#C0C0C0", 
+    textAlign: 'center',
+    paddingTop: 30,
+    paddingBottom: 30
   }
 });
 
