@@ -13,8 +13,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as MainScreen from './MainScreen';
 import CustomSidebarMenu from './CustomSidebarMenu.js';
-import FirstPage from './FirstPage';
-import SecondPage from './SecondPage';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,7 +32,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Armenian Prayer1" screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Armenian Prayer" component={MainScreen.MainScreen } />  
+          <Stack.Screen name="Armenian Prayer" component={MainScreen.MainScreenHolder } />  
         </Stack.Navigator>
       </NavigationContainer>
     );
