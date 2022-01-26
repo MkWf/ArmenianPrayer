@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 const CustomSidebarMenu = (props) => {
-  const { state, descriptors, navigation } = props;
-  let lastGroupName = '';
-  let newGroup = true;
-
   const [allLang, setAllLang] = React.useState(true);
   const [engLang, setEngLang] = React.useState(false);
   const [armLang, setArmLang] = React.useState(false);
   const [traLang, setTraLang] = React.useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.mainContainer}>
             <Text style={{fontSize:30, marginLeft:20, marginBottom:20}}>Settings</Text>
