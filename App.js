@@ -10,25 +10,30 @@ import CustomSidebarMenu from './CustomSidebarMenu';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
-export default function MainScreenHolder({navigation}) {
+export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomSidebarMenu {...props} />}>
-        <Drawer.Screen
-          name="Armenian Prayer"  //name beside drawer icon on toolbar 
-          component={MainScreen}  //the screen to be displayed 
-        />
-      </Drawer.Navigator>
       <Stack.Navigator>
-          <Stack.Screen name="Armenian Prayer" component={MainScreen } />  
+          <Stack.Screen name="Armenian Prayer" component={MainScreenNavigator} options={{headerShown: false}} />  
           <Stack.Screen name="Divine Liturgy Screen" component={DivineLiturgyScreen} />  
         </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export const MainScreen = ({navigation}) => {
+const MainScreenNavigator = ({navigation}) => {
+  return(
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+      <Drawer.Screen
+        name="Armenian Prayer"  //name beside drawer icon on toolbar 
+        component={MainScreen}  //the screen to be displayed 
+      />
+    </Drawer.Navigator>
+  );
+}
+
+const MainScreen = ({navigation}) => {
   return (
     <View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
@@ -39,7 +44,7 @@ export const MainScreen = ({navigation}) => {
             </Card.Content>
         </Card>
 
-        <Card style={stylesMainScreen.cardSecond} onPress={() => navigation.navigate('DivineLiturgyScreen')}>
+        <Card style={stylesMainScreen.cardSecond} onPress={() => navigation.navigate("Divine Liturgy Screen")}>
             <Card.Content>
                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                 <Text>{"\n"}Time to Pray!{"\n"}</Text>
@@ -51,7 +56,7 @@ export const MainScreen = ({navigation}) => {
   );
 };
 
-export function DivineLiturgyScreen({navigation}) {
+const DivineLiturgyScreen = ({navigation}) => {
   return (
     <View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
@@ -104,26 +109,3 @@ const stylesMainScreen = StyleSheet.create({
   },
 });
 
-function firstScreenStack({ navigation }) {
-  return (
-    <Stack.Navigator initialRouteName="MainScreen" screenOptions={{headerShown: false}}>
-      <Stack.Screen
-        name="MainScreen"
-        component={MainScreen}
-        options={{
-          title: 'First Page1', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#f4511e', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
