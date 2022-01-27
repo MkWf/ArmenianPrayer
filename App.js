@@ -28,6 +28,11 @@ const MainScreenNavigator = ({navigation}) => {
       <Drawer.Screen
         name="Armenian Prayer"  //name beside drawer icon on toolbar 
         component={MainScreen}  //the screen to be displayed 
+        options={{
+          headerStyle: {
+            backgroundColor: '#f5f5dd', //Set Header color
+          },
+        }}
       />
     </Drawer.Navigator>
   );
@@ -58,7 +63,7 @@ const MainScreen = ({navigation}) => {
 
 const DivineLiturgyScreen = ({navigation}) => {
   return (
-    <View style={stylesMainScreen.container}>
+    <View style={stylesDivineLiturgyScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
             <Card.Content>
                 <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
@@ -108,4 +113,14 @@ const stylesMainScreen = StyleSheet.create({
     color: '#34495e',
   },
 });
+
+const stylesDivineLiturgyScreen = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f5f5dd',
+    justifyContent: "space-evenly",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  },
+})
 
