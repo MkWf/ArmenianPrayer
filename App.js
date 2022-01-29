@@ -1,22 +1,31 @@
 import 'react-native-gesture-handler';
-import React from "react";
-import Svg, { Path } from "react-native-svg"
-import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity} from "react-native";
+import React, {useState} from "react";  //OfferingOfTheLamb
+import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
+import Constants from "expo-constants"; //OfferingOfTheLamb
+import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity, useWindowDimensions,ScrollView} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CustomSidebarMenu from './CustomSidebarMenu';
+import { createDrawerNavigator } from '@react-navigation/drawer'; //MainScreenNavigator
+import { NavigationContainer } from '@react-navigation/native'; //App
+import { createNativeStackNavigator } from "@react-navigation/native-stack"; //App
+import CustomSidebarMenu from './CustomSidebarMenu'; //MainScreenNavigator
 
-const Drawer = createDrawerNavigator();
-const Stack = createNativeStackNavigator();
+//OfferingOfTheLamb
+import * as SQLite from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system';
+import { Asset } from 'expo-asset';
+import HTML from 'react-native-render-html';
+import * as BaseLiturgy from './constants/liturgyBaseHTML';
+
+const Drawer = createDrawerNavigator();  //MainScreenNavigator
+const Stack = createNativeStackNavigator();  //App
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name="Armenian Prayer" component={MainScreenNavigator} options={{headerShown: false}} />  
-          <Stack.Screen name="Divine Liturgy Screen" component={DivineLiturgyScreen} />  
+          <Stack.Screen name="Armenian Prayer" component={MainScreenNavigator} options={{headerShown: false}}/>  
+          <Stack.Screen name="Divine Liturgy Screen" component={DivineLiturgyScreen}/>
+          <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
         </Stack.Navigator>
     </NavigationContainer>
   );
@@ -71,7 +80,7 @@ const DivineLiturgyScreen = ({navigation}) => {
             </Card.Content>
         </Card>
 
-        <TouchableOpacity style={stylesDivineLiturgyScreen.listItemContainer}>  
+        <TouchableOpacity style={stylesDivineLiturgyScreen.listItemContainer} onPress={() => navigation.navigate("Liturgy")}>  
           <Svg style={{marginTop:9}} width={20} height={20} viewBox="0 0 20 20">
             <Path d="M0,2.7c3.744,0,6.24-2.443,6.24-6.1A12.3,12.3,0,0,0,4.953-8.288a49.759,49.759,0,0,0-3.63-6.293A1.533,1.533,0,0,0,0-15.4a1.536,1.536,0,0,0-1.327.817A49.334,49.334,0,0,0-4.97-8.244,12.335,12.335,0,0,0-6.245-3.4C-6.245.255-3.749,2.7,0,2.7ZM0,.958A4.188,4.188,0,0,1-4.5-3.4a10.187,10.187,0,0,1,1.09-4.008A35.437,35.437,0,0,1-.083-13.131a.092.092,0,0,1,.176,0A35.778,35.778,0,0,1,3.406-7.444,10.447,10.447,0,0,1,4.5-3.4,4.186,4.186,0,0,1,0,.958Z" transform="translate(6.245 15.398)" fill="#e5801c"/>
           </Svg> 
@@ -116,6 +125,69 @@ const DivineLiturgyScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
     </View> 
+  );
+};
+
+const OfferingOfTheLamb = ({navigation}) => {
+  const [textHtml, setHTML] = React.useState('');
+  const [isDbLoad, setDbLoad] = React.useState(false);
+  const { width } = useWindowDimensions();
+  const dbFile = 'table.db';
+
+  const loadDB = async () => {
+    if(!isDbLoad){
+      try {
+        if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+          await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+        };
+
+        await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${dbFile}`).
+          then(() => {
+            const db = SQLite.openDatabase(dbFile);
+            setDbLoad(true);
+            db.transaction((tx) => {
+              tx.executeSql(
+                `select * from text`,
+                [], 
+                (_, result) => {
+                  let i;
+                  let rowStrings = BaseLiturgy.liturgyHTML;
+                  let rowObject;
+                  
+                  for(i=0; i < result.rows._array.length; i++){
+                    rowObject = result.rows._array[i];
+                    rowStrings += `<tr> <td align="left">`;
+                    rowStrings += rowObject['Ar'];
+                    rowStrings += `</td> <td align="left">`;
+                    rowStrings += rowObject['Tr'];
+                    rowStrings += `</td> <td align="left">`;
+                    rowStrings += rowObject['En'];
+                    rowStrings += `</td> </tr>`;
+                  }
+                  rowStrings += `</table> <br/><br/> </body>`;
+                  liturgy = rowStrings;
+                  setHTML(liturgy);
+                }, 
+                (_, err) => {
+                    console.log("error");
+                    alert("out");
+                });
+              });
+            }); 
+        } catch (error) {
+          alert("FAIL");
+          console.log("fail");
+          throw new Error(error);
+        }
+    }
+  }
+
+  loadDB();
+
+  return (
+    <ScrollView style={stylesOfferingOfTheLamb.container}>
+      <HTML source={{html: textHtml}} contentWidth={width} />
+    </ScrollView>
   );
 };
 
@@ -197,3 +269,10 @@ const stylesDivineLiturgyScreen = StyleSheet.create({
   }
 })
 
+const stylesOfferingOfTheLamb = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  }
+})
