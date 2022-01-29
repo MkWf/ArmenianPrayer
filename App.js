@@ -64,13 +64,52 @@ const MainScreen = ({navigation}) => {
 const DivineLiturgyScreen = ({navigation}) => {
   return (
     <View style={stylesDivineLiturgyScreen.container}>
-        <Card style={stylesMainScreen.cardMain}> 
+        <Card style={stylesDivineLiturgyScreen.headerContainer}> 
             <Card.Content>
-                <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
-                <Text>There's just liturgy for now but more will be coming soon!{"\n"}</Text>
-                <Text style={{color:"#FFA500"}} onPress={() => Alert.alert("Pushed")}>Read about upcoming features ></Text>
+                <Text style={stylesDivineLiturgyScreen.headerText}>Divine Liturgy</Text>
             </Card.Content>
         </Card>
+
+        <View style={stylesDivineLiturgyScreen.listItemContainer}>  
+          <Image style={stylesDivineLiturgyScreen.listItemIcon}
+            source={require('./assets/offeringIcon.svg')} />
+          
+          <View style={stylesDivineLiturgyScreen.listItemTextContainer}>
+            <Text style={stylesDivineLiturgyScreen.listItemTitle}>
+              The Offering of the Lamb
+            </Text>
+            <Text style={stylesDivineLiturgyScreen.listItemSubtitle}>
+              We offer the bread and wine and ourselves to God
+            </Text>
+          </View>
+        </View>
+        <View style={stylesDivineLiturgyScreen.listItemContainer}>  
+          <Image style={stylesDivineLiturgyScreen.listItemIcon}
+            source={require('./assets/wordIcon.svg')} />
+          
+          <View style={stylesDivineLiturgyScreen.listItemTextContainer}>
+            <Text style={stylesDivineLiturgyScreen.listItemTitle}>
+              The Liturgy of the Word
+            </Text>
+            <Text style={stylesDivineLiturgyScreen.listItemSubtitle}>
+              We listen to the Word of God from the Bible and to a sermon
+            </Text>
+          </View>
+        </View>
+        <View style={stylesDivineLiturgyScreen.listItemContainer}>  
+          
+          <Image style={stylesDivineLiturgyScreen.listItemIcon}
+            source={require('./assets/faithfulIcon.svg')} />
+      
+          <View style={stylesDivineLiturgyScreen.listItemTextContainer}>
+            <Text style={stylesDivineLiturgyScreen.listItemTitle}>
+              The Liturgy of the Faithful
+            </Text>
+            <Text style={stylesDivineLiturgyScreen.listItemSubtitle}>
+              We receive the Body and Blood of Jesus
+            </Text>
+          </View>
+        </View>
     </View> 
   );
 };
@@ -84,8 +123,6 @@ const stylesMainScreen = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   cardMain: {
-      padding: 0, 
-      margin: 0,
       elevation: 4,
       width: '85%',
       alignItems: "center",
@@ -119,8 +156,39 @@ const stylesDivineLiturgyScreen = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f5f5dd',
-    justifyContent: "space-evenly",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
+  headerContainer: {
+    width: '85%',
+    alignItems: "center",
+  },
+  headerText: {
+    fontWeight:"bold",
+    fontSize:40
+  },
+  listItemContainer: { 
+    paddingTop: 50,
+    flexDirection: "row",
+    paddingLeft: 30,
+    marginBottom: 35
+  },
+  listItemIcon: {
+    height: 80,
+    width: 80,
+  },
+  listItemTextContainer: {
+    flexDirection: "column",
+    paddingLeft: 30,
+    paddingTop: 4
+  },
+  listItemTitle: {
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  listItemSubtitle: {
+    color: "gray",
+    fontSize: 14,
+    paddingRight: 100
+  }
 })
 
