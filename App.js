@@ -23,8 +23,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-          <Stack.Screen name="Armenian Prayer" component={MainScreenNavigator} options={{headerShown: false}}/>  
-          <Stack.Screen name="Divine Liturgy Screen" component={DivineLiturgyScreen}/>
+          <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
+          <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
           <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
         </Stack.Navigator>
     </NavigationContainer>
@@ -59,7 +59,7 @@ const MainScreen = ({navigation}) => {
             </Card.Content>
         </Card>
 
-        <Card style={stylesMainScreen.cardSecond} onPress={() => navigation.navigate("Divine Liturgy Screen")}>
+        <Card style={stylesMainScreen.cardSecond} onPress={() => navigation.navigate("Divine Liturgy")}>
             <Card.Content>
                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                 <Text>{"\n"}Time to Pray!{"\n"}</Text>
