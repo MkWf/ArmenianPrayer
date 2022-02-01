@@ -29,3 +29,19 @@ const user  = (user = { username: ''}, action) => {
 //model in a different reducer. However, when it comes to exporting them, we need to combine all the reducers so that we end up 
 //with a single entrypoint for our state. Redux provides a helper function to do this and we shall use it
 export default combineReducers({ user });
+
+
+import { UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/users';
+
+const language = (language = { languages: ''}, action) => {
+    switch (action.type) {
+        case UPDATE_ARMENIAN:
+            return { languages: action.languages }
+        case UPDATE_TRANSLIT:
+            return { languages: action.languages }
+        case UPDATE_ENGLISH:
+            return { languages: action.languages }
+        default:
+            return language;
+    }
+}
