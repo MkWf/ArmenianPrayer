@@ -58,6 +58,7 @@ const MainScreenNavigator = ({navigation}) => {
 
 const MainScreen = ({navigation}) => {
   const dispatch = useDispatch();
+  const user = useSelector( state => state.user );
   const languageArm = useSelector( state => state.languageArmenian);
   const languageTrans = useSelector( state => state.languageTranslit);
   const languageEng = useSelector( state => state.languageEnglish);
@@ -81,28 +82,31 @@ const MainScreen = ({navigation}) => {
   return (
 
     <View>
-        <Text>Armenian: {languageArm.isLanguageArmActive}</Text>
+        <Text>Armenian: {user.userName}</Text>
         <Button 
           style={{height: 40, width: 160, backgroundColor: 'red', borderRadius: 8, marginTop: 10}} 
           text='Save' 
           onPress={ () => {
-            if(languageArm.isLanguageArmActive == 'true'){
+            Alert.alert(languageArm.isLanguageArmActive);
+            /*if(languageArm.isLanguageArmActive.equals('true')){
               saveArmenianState('false');
             }else{
               saveArmenianState('true');
-            }
+            }*/
           }}/>
 
-        <Text>Translit: {languageTrans.isLanguageTransActive}</Text>
+        <Text>Translit: {user.userName}</Text>
         <Button 
           style={{height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10}} 
           text='Save' 
           onPress={ () => {
-            if(languageTrans.isLanguageTransActive == 'true'){
+            Alert.alert(JSON.stringify(languageArm.isLanguageArmActive));
+            /*if(languageTrans.isLanguageTransActive.equals('true')){
               saveTranslitState('false');
             }else{
               saveTranslitState('true');
-            }
+            }*/
+
           }}/>
 
         <Text>English: {languageEng.isLanguageEngActive}</Text>
@@ -110,7 +114,7 @@ const MainScreen = ({navigation}) => {
           style={{height: 40, width: 160, backgroundColor: 'blue', borderRadius: 8, marginTop: 10}} 
           text='Save' 
           onPress={ () => {
-            if(languageEng.isLanguageEngActive == 'true'){
+            if(languageEng.isLanguageEngActive.equals('true')){
               saveEnglishState('false');
             }else{
               saveEnglishState('true');

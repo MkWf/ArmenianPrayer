@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 //practice to encode the initial application state using default function arguments in reducers.
 //The second is the action to handle. For now we only have one kind of action but in the future we'll have one for updating the email 
 //address, another to update the password, one for the profile photo...
-const user  = (user = { username: ''}, action) => {
+const user  = (user = { username: 'mark'}, action) => {
     switch (action.type) {
         case UPDATE_USERNAME:
             return { username: action.username }
