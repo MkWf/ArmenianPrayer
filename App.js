@@ -1,4 +1,6 @@
 import 'react-native-gesture-handler';
+import { Provider } from 'react-redux';  //redux - make the state available throughout the app 
+import { PersistGate } from 'redux-persist/integration/react'; //redux - in charge of reloading the data when the application is reopened.
 import React, {useState} from "react";  //OfferingOfTheLamb
 import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
 import Constants from "expo-constants"; //OfferingOfTheLamb
@@ -21,13 +23,17 @@ const Stack = createNativeStackNavigator();  //App
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
-          <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
-          <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
-        </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <PersistGate persistor={persistor} loading={null}>
+      <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
+            <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
+            <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
+          </Stack.Navigator>
+      </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 }
 
