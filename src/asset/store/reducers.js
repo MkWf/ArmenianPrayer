@@ -1,4 +1,4 @@
-import { UPDATE_USERNAME } from '../actions/users';
+import { UPDATE_USERNAME, UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/users';
 import { combineReducers } from 'redux';
 
 //This particular reducer will take care to update our user's data. Reducers always receive two parameters.
@@ -23,25 +23,35 @@ const user  = (user = { username: ''}, action) => {
 //we receive an action which is not handled by this reducer (e.g. some action that updates some other part of the state), the state is 
 //not modified.
 
+const languageArmenian = (languageArmenian = {islanguageArmActive: 'false'}, action) => {
+    switch (action.type) {
+        case UPDATE_ARMENIAN:
+            return { islanguageArmActive: action.islanguageArmActive }
+        default:
+            return languageArmenian;
+    }
+}
+
+const languageTranslit = (languageTranslit = {isLanguageTransActive: 'false'}, action) => {
+    switch (action.type) {
+        case UPDATE_TRANSLIT:
+            return { isLanguageTransActive: action.isLanguageTransActive }
+        default:
+            return languageTranslit;
+    }
+}
+
+const languageEnglish = (languageEnglish = {isLanguageEngActive: 'false'}, action) => {
+    switch (action.type) {
+        case UPDATE_ENGLISH:
+            return { isLanguageEngActive: action.isLanguageEngActive }
+        default:
+            return languageEnglish;
+    }
+}
 
 //Imagine that in the future you want to keep state about movies. You'll probably need a movies reducer, which handles it's 
 //own set of actions. The best way to keep track of state is to keep the actions related to each kind of object in your data 
 //model in a different reducer. However, when it comes to exporting them, we need to combine all the reducers so that we end up 
 //with a single entrypoint for our state. Redux provides a helper function to do this and we shall use it
-export default combineReducers({ user });
-
-
-import { UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/users';
-
-const language = (language = { languages: ''}, action) => {
-    switch (action.type) {
-        case UPDATE_ARMENIAN:
-            return { languages: action.languages }
-        case UPDATE_TRANSLIT:
-            return { languages: action.languages }
-        case UPDATE_ENGLISH:
-            return { languages: action.languages }
-        default:
-            return language;
-    }
-}
+export default combineReducers({ user, languageArmenian, languageTranslit, languageEnglish });

@@ -11,7 +11,7 @@ import { NavigationContainer } from '@react-navigation/native'; //App
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; //App
 import CustomSidebarMenu from './CustomSidebarMenu'; //MainScreenNavigator
 import { store, persistor } from './src/asset/store/store';
-import { updateUsername } from './src/asset/actions/users';
+import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/users';
 
 //OfferingOfTheLamb
 import * as SQLite from 'expo-sqlite';
@@ -58,33 +58,64 @@ const MainScreenNavigator = ({navigation}) => {
 
 const MainScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const user = useSelector( state => state.user);
-  const [newUsername, setNewUsername] = useState('');
+  const languageArm = useSelector( state => state.languageArmenian);
+  const languageTrans = useSelector( state => state.languageTranslit);
+  const languageEng = useSelector( state => state.languageEnglish);
 
-  const saveUsername = () => {
-    // in case the username hasnt been updated
-    if(newUsername === '') return;
+  const [isArmenianActive, setArmenian] = useState('true');
+  const [isTranslitActive, setTranslit] = useState('true');
+  const [isEnglishActive, setEnglish] = useState('true');
 
-    dispatch(updateUsername(newUsername) );
-}
+  const saveArmenianState = (isTrue) => {
+    dispatch(updateArmenian(isTrue));
+  }
+
+  const saveTranslitState = (isTrue) => {
+    dispatch(updateTranslit(isTrue));
+  }
+
+  const saveEnglishState = (isTrue) => {
+    dispatch(updateEnglish(isTrue));
+  }
 
   return (
 
     <View>
-        <Text>Welcome {user.username} </Text>
-        <TextInput 
-          style={{ height: 40, borderColor: 'white', borderWidth: 1, borderRadius: 12, padding: 8, color: 'white'}}
-          onChangeText={text => setNewUsername(text)}
-          value={newUsername}
-          placeholder='New Username'
-          placeholderTextColor='white'
-        />
+        <Text>Armenian: {languageArm.isLanguageArmActive}</Text>
         <Button 
-            style={{height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10}} 
-            text='Save' 
-            onPress={ () => saveUsername()}
-        />
-  
+          style={{height: 40, width: 160, backgroundColor: 'red', borderRadius: 8, marginTop: 10}} 
+          text='Save' 
+          onPress={ () => {
+            if(languageArm.isLanguageArmActive == 'true'){
+              saveArmenianState('false');
+            }else{
+              saveArmenianState('true');
+            }
+          }}/>
+
+        <Text>Translit: {languageTrans.isLanguageTransActive}</Text>
+        <Button 
+          style={{height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10}} 
+          text='Save' 
+          onPress={ () => {
+            if(languageTrans.isLanguageTransActive == 'true'){
+              saveTranslitState('false');
+            }else{
+              saveTranslitState('true');
+            }
+          }}/>
+
+        <Text>English: {languageEng.isLanguageEngActive}</Text>
+        <Button 
+          style={{height: 40, width: 160, backgroundColor: 'blue', borderRadius: 8, marginTop: 10}} 
+          text='Save' 
+          onPress={ () => {
+            if(languageEng.isLanguageEngActive == 'true'){
+              saveEnglishState('false');
+            }else{
+              saveEnglishState('true');
+            }
+          }}/>
     </View> 
   );
 };
