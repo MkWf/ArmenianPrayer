@@ -1,15 +1,17 @@
 import 'react-native-gesture-handler';
-import { Provider } from 'react-redux';  //redux - make the state available throughout the app 
+import { Provider, useSelector, useDispatch } from 'react-redux';  //redux - make the state available throughout the app 
 import { PersistGate } from 'redux-persist/integration/react'; //redux - in charge of reloading the data when the application is reopened.
-import React, {useState} from "react";  //OfferingOfTheLamb
+import React, {useReducer, useState} from "react";  //OfferingOfTheLamb
 import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
 import Constants from "expo-constants"; //OfferingOfTheLamb
 import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity, useWindowDimensions,ScrollView} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Button, Card, Title, Paragraph, TextInput } from 'react-native-paper';
 import { createDrawerNavigator } from '@react-navigation/drawer'; //MainScreenNavigator
 import { NavigationContainer } from '@react-navigation/native'; //App
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; //App
 import CustomSidebarMenu from './CustomSidebarMenu'; //MainScreenNavigator
+import { store, persistor } from './src/asset/store/store';
+import { updateUsername } from './src/asset/actions/users';
 
 //OfferingOfTheLamb
 import * as SQLite from 'expo-sqlite';
@@ -23,15 +25,15 @@ const Stack = createNativeStackNavigator();  //App
 
 export default function App() {
   return (
-    <Provider store={Store}>
+    <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-      <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
-            <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
-            <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
-          </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator>
+              <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
+              <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
+              <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
+            </Stack.Navigator>
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );
@@ -55,8 +57,39 @@ const MainScreenNavigator = ({navigation}) => {
 }
 
 const MainScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const user = useSelector( state => state.user);
+  const [newUsername, setNewUsername] = useState('');
+
+  const saveUsername = () => {
+    // in case the username hasnt been updated
+    if(newUsername === '') return;
+
+    dispatch(updateUsername(newUsername) );
+}
+
   return (
-    <View style={stylesMainScreen.container}>
+
+    <View>
+        <Text>Welcome {user.username} </Text>
+        <TextInput 
+          style={{ height: 40, borderColor: 'white', borderWidth: 1, borderRadius: 12, padding: 8, color: 'white'}}
+          onChangeText={text => setNewUsername(text)}
+          value={newUsername}
+          placeholder='New Username'
+          placeholderTextColor='white'
+        />
+        <Button 
+            style={{height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10}} 
+            text='Save' 
+            onPress={ () => saveUsername()}
+        />
+  
+    </View> 
+  );
+};
+
+/*<View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
             <Card.Content>
                 <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
@@ -73,9 +106,7 @@ const MainScreen = ({navigation}) => {
                 <Paragraph>We pray the liturgy every Sunday to celebrate new life in Jesus</Paragraph>
             </Card.Content>
         </Card>
-    </View> 
-  );
-};
+        */
 
 const DivineLiturgyScreen = ({navigation}) => {
   return (
