@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
+import React, { useState} from 'react';
+import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/users';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const CustomSidebarMenu = (props) => {
   const [allLang, setAllLang] = React.useState(true);
@@ -10,9 +12,53 @@ const CustomSidebarMenu = (props) => {
   const [armLang, setArmLang] = React.useState(false);
   const [traLang, setTraLang] = React.useState(false);
 
-  const user = useSelector( state => state.user);
-  
+  const dispatch = useDispatch();
 
+  const user = useSelector( state => state.user);
+  const [newUsername, setNewUsername] = useState('');
+
+  const saveUsername = () => {
+    // in case the username hasnt been updated
+    if(user.username == false){
+      dispatch(updateUsername(true));
+    }else{
+      dispatch(updateUsername(false));
+    }
+  }
+
+  const armenian = useSelector( state => state.languageArmenian );
+  const translit = useSelector( state => state.languageTranslit );
+  const english = useSelector( state => state.languageEnglish );
+
+  const saveArmenian = () => {
+    if(armenian.islanguageArmActive == false){
+      Alert.alert("false -> true");
+      dispatch(updateArmenian(true));
+    }else{
+      Alert.alert("true -> false");
+      dispatch(updateArmenian(false));
+    }
+  }
+
+  const saveTranslit = () => {
+    if(translit.isLanguageTransActive == false){
+      dispatch(updateTranslit(true));
+    }else{
+      dispatch(updateTranslit(false));
+    }
+  }
+
+  const saveEnglish = () => {
+    if(english.isLanguageEngActive == false){
+      dispatch(updateEnglish(true));
+      Alert.alert("false");
+    }else{
+      dispatch(updateEnglish(false));
+      Alert.alert("true");
+    }
+  }
+
+  
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
       <DrawerContentScrollView {...props}>
@@ -21,35 +67,23 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-                <TouchableOpacity style={[engLang ? styles.cardActive : styles.cardInactive]} 
-                onPress={() => {
-                  setEngLang(!engLang);
-                  if(engLang == false){
-                    setAllLang(false);
-                  }
-                  }}>
-                    <Text>English</Text>
-                </TouchableOpacity>
-                    
-                <TouchableOpacity style={[armLang ? styles.cardActive : styles.cardInactive]} 
-                 onPress={() => {
-                  setArmLang(!armLang);
-                  if(armLang == false){
-                    setAllLang(false);
-                  }
-                  }}>
+              <TouchableOpacity style={english.isLanguageEngActive ? styles.cardActive : styles.cardInactive} 
+                 onPress={() => saveEnglish()}>
+                   
+                <Text>English</Text>
+              </TouchableOpacity>
+            
+              
+                <TouchableOpacity style={[armenian.islanguageArmActive ? styles.cardActive : styles.cardInactive]} 
+                 onPress={() => saveArmenian()}>
+        
                     <Text>հայերեն</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.itemsRow}>
-              <TouchableOpacity style={[traLang ? styles.cardActive : styles.cardInactive]} 
-                onPress={() => { 
-                setTraLang(!traLang);
-                if(traLang == false){
-                  setAllLang(false);
-                }
-                }}>
+              <TouchableOpacity style={[translit.isLanguageTransActive ? styles.cardActive : styles.cardInactive]} 
+                onPress={() => saveTranslit()}>
                   <Text>Hayeren</Text>
               </TouchableOpacity>
                   

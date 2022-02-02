@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 //practice to encode the initial application state using default function arguments in reducers.
 //The second is the action to handle. For now we only have one kind of action but in the future we'll have one for updating the email 
 //address, another to update the password, one for the profile photo...
-const user  = (user = { username: 'false'}, action) => {
+const user  = (user = { username: false}, action) => {
     switch (action.type) {
         case UPDATE_USERNAME:
             return { username: action.username }
@@ -23,7 +23,7 @@ const user  = (user = { username: 'false'}, action) => {
 //we receive an action which is not handled by this reducer (e.g. some action that updates some other part of the state), the state is 
 //not modified.
 
-const languageArmenian = (languageArmenian = {islanguageArmActive: 'false'}, action) => {
+const languageArmenian = (languageArmenian = {islanguageArmActive: true}, action) => {
     switch (action.type) {
         case UPDATE_ARMENIAN:
             return { islanguageArmActive: action.islanguageArmActive }
@@ -32,7 +32,7 @@ const languageArmenian = (languageArmenian = {islanguageArmActive: 'false'}, act
     }
 }
 
-const languageTranslit = (languageTranslit = {isLanguageTransActive: 'false'}, action) => {
+const languageTranslit = (languageTranslit = {isLanguageTransActive: true}, action) => {
     switch (action.type) {
         case UPDATE_TRANSLIT:
             return { isLanguageTransActive: action.isLanguageTransActive }
@@ -41,7 +41,7 @@ const languageTranslit = (languageTranslit = {isLanguageTransActive: 'false'}, a
     }
 }
 
-const languageEnglish = (languageEnglish = {isLanguageEngActive: 'false'}, action) => {
+const languageEnglish = (languageEnglish = {isLanguageEngActive: true}, action) => {
     switch (action.type) {
         case UPDATE_ENGLISH:
             return { isLanguageEngActive: action.isLanguageEngActive }

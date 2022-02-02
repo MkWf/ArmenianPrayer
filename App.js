@@ -64,10 +64,10 @@ const MainScreen = ({navigation}) => {
 
   const saveUsername = () => {
     // in case the username hasnt been updated
-    if(user.username == 'false'){
-      dispatch(updateUsername('true'));
+    if(user.username == false){
+      dispatch(updateUsername(true));
     }else{
-      dispatch(updateUsername('false'));
+      dispatch(updateUsername(false));
     }
 }
 
@@ -92,20 +92,7 @@ const MainScreen = ({navigation}) => {
   }
 
   return (
-
-    <View>
-        <Text>Armenian: {user.username} </Text>
-        <Button 
-          style={{ height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10 }} 
-          text='Save' 
-          onPress={ () => saveUsername()}/>
-
-
-    </View> 
-  );
-};
-
-/*<View style={stylesMainScreen.container}>
+    <View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
             <Card.Content>
                 <Text style={{fontWeight:"bold", fontSize:20}}>Welcome to the Armenian Prayer App {"\n"}</Text>
@@ -122,7 +109,10 @@ const MainScreen = ({navigation}) => {
                 <Paragraph>We pray the liturgy every Sunday to celebrate new life in Jesus</Paragraph>
             </Card.Content>
         </Card>
-        */
+    </View> 
+  );
+};
+
 
 const DivineLiturgyScreen = ({navigation}) => {
   return (
@@ -187,6 +177,24 @@ const OfferingOfTheLamb = ({navigation}) => {
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
 
+  const armenian = useSelector( state => state.languageArmenian );
+  const translit = useSelector( state => state.languageTranslit );
+  const english = useSelector( state => state.languageEnglish );
+
+  const languageQuery = () => {
+    let rowQuery = "";
+    if(armenian.isArmenianActive){
+      rowQuery += 'Ar'
+    }
+    if(translit.isTranslitActive){
+      rowQuery += 'Tr'
+    }
+    if(english.isEnglishActive){
+      rowQuery += 'En'
+    }
+    return rowQuery;
+  }
+
   const loadDB = async () => {
     if(!isDbLoad){
       try {
@@ -198,6 +206,7 @@ const OfferingOfTheLamb = ({navigation}) => {
           then(() => {
             const db = SQLite.openDatabase(dbFile);
             setDbLoad(true);
+            
             db.transaction((tx) => {
               tx.executeSql(
                 `select * from text`,
@@ -208,13 +217,18 @@ const OfferingOfTheLamb = ({navigation}) => {
                   let rowObject;
                   
                   for(i=0; i < result.rows._array.length; i++){
-                    rowObject = result.rows._array[i];
-                    rowStrings += `<tr> <td align="left">`;
-                    rowStrings += rowObject['Ar'];
-                    rowStrings += `</td> <td align="left">`;
-                    rowStrings += rowObject['Tr'];
-                    rowStrings += `</td> <td align="left">`;
-                    rowStrings += rowObject['En'];
+                    if(armenian.isArmenianActive){
+                      rowStrings += `<tr> <td align="left">`;
+                      rowStrings += rowObject['Ar'];
+                    }
+                    if(translit.isTranslitActive){
+                      rowStrings += `</td> <td align="left">`;
+                      rowStrings += rowObject['Tr'];
+                    }
+                    if(english.isEnglishActive){
+                      rowStrings += `</td> <td align="left">`;
+                      rowStrings += rowObject['En'];
+                    }
                     rowStrings += `</td> </tr>`;
                   }
                   rowStrings += `</table> <br/><br/> </body>`;
@@ -239,6 +253,9 @@ const OfferingOfTheLamb = ({navigation}) => {
 
   return (
     <ScrollView style={stylesOfferingOfTheLamb.container}>
+      <Text>${JSON.stringify(armenian.islanguageArmActive)}</Text>
+      <Text>${JSON.stringify(translit.isLanguageTransActive)}</Text>
+      <Text>${JSON.stringify(english.isLanguageEngActive)}</Text>
       <HTML source={{html: textHtml}} contentWidth={width} />
     </ScrollView>
   );
