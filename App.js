@@ -58,7 +58,19 @@ const MainScreenNavigator = ({navigation}) => {
 
 const MainScreen = ({navigation}) => {
   const dispatch = useDispatch();
+
   const user = useSelector( state => state.user );
+  const [newUsername, setNewUsername] = useState('');
+
+  const saveUsername = () => {
+    // in case the username hasnt been updated
+    if(user.username == 'false'){
+      dispatch(updateUsername('true'));
+    }else{
+      dispatch(updateUsername('false'));
+    }
+}
+
   const languageArm = useSelector( state => state.languageArmenian);
   const languageTrans = useSelector( state => state.languageTranslit);
   const languageEng = useSelector( state => state.languageEnglish);
@@ -82,44 +94,13 @@ const MainScreen = ({navigation}) => {
   return (
 
     <View>
-        <Text>Armenian: {user.userName}</Text>
+        <Text>Armenian: {user.username} </Text>
         <Button 
-          style={{height: 40, width: 160, backgroundColor: 'red', borderRadius: 8, marginTop: 10}} 
+          style={{ height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10 }} 
           text='Save' 
-          onPress={ () => {
-            Alert.alert(languageArm.isLanguageArmActive);
-            /*if(languageArm.isLanguageArmActive.equals('true')){
-              saveArmenianState('false');
-            }else{
-              saveArmenianState('true');
-            }*/
-          }}/>
+          onPress={ () => saveUsername()}/>
 
-        <Text>Translit: {user.userName}</Text>
-        <Button 
-          style={{height: 40, width: 160, backgroundColor: 'white', borderRadius: 8, marginTop: 10}} 
-          text='Save' 
-          onPress={ () => {
-            Alert.alert(JSON.stringify(languageArm.isLanguageArmActive));
-            /*if(languageTrans.isLanguageTransActive.equals('true')){
-              saveTranslitState('false');
-            }else{
-              saveTranslitState('true');
-            }*/
 
-          }}/>
-
-        <Text>English: {languageEng.isLanguageEngActive}</Text>
-        <Button 
-          style={{height: 40, width: 160, backgroundColor: 'blue', borderRadius: 8, marginTop: 10}} 
-          text='Save' 
-          onPress={ () => {
-            if(languageEng.isLanguageEngActive.equals('true')){
-              saveEnglishState('false');
-            }else{
-              saveEnglishState('true');
-            }
-          }}/>
     </View> 
   );
 };
