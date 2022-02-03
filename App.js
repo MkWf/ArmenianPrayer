@@ -11,7 +11,7 @@ import { NavigationContainer } from '@react-navigation/native'; //App
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; //App
 import CustomSidebarMenu from './CustomSidebarMenu'; //MainScreenNavigator
 import { store, persistor } from './src/asset/store/store';
-import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/users';
+import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
 
 //OfferingOfTheLamb
 import * as SQLite from 'expo-sqlite';

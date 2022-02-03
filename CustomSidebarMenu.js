@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
-import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/users';
+import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -52,8 +52,6 @@ const CustomSidebarMenu = (props) => {
 
 
  
-
-  
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
       <DrawerContentScrollView {...props}>
