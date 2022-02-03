@@ -201,7 +201,7 @@ const OfferingOfTheLamb = ({navigation}) => {
                     if(translit.isTranslit && armenian.isArmenian){
                       rowStrings += `</td> <td align="left">`;
                       rowStrings += rowObject['Tr'];
-                    }else{
+                    }else if(translit.isTranslit && !armenian.isArmenian){
                       rowStrings += `<tr> <td align="left">`;
                       rowStrings += rowObject['Tr'];
                     }
