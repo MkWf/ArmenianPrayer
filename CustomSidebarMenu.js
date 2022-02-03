@@ -7,15 +7,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 const CustomSidebarMenu = (props) => {
-  const [allLang, setAllLang] = React.useState(true);
-  const [engLang, setEngLang] = React.useState(false);
-  const [armLang, setArmLang] = React.useState(false);
-  const [traLang, setTraLang] = React.useState(false);
-
   const dispatch = useDispatch();
 
   const user = useSelector( state => state.user);
-  const [newUsername, setNewUsername] = useState('');
+  const english = useSelector( state => state.english);
+  const armenian = useSelector( state => state.armenian);
+  const translit = useSelector( state => state.translit);
 
   const saveUsername = () => {
     // in case the username hasnt been updated
@@ -26,37 +23,35 @@ const CustomSidebarMenu = (props) => {
     }
   }
 
-  const armenian = useSelector( state => state.languageArmenian );
-  const translit = useSelector( state => state.languageTranslit );
-  const english = useSelector( state => state.languageEnglish );
+  const saveEnglish = () => {
+    // in case the username hasnt been updated
+    if(english.isEnglish == false){
+      dispatch(updateEnglish(true));
+    }else{
+      dispatch(updateEnglish(false));
+    }
+  }
 
   const saveArmenian = () => {
-    if(armenian.islanguageArmActive == false){
-      Alert.alert("false -> true");
+    // in case the username hasnt been updated
+    if(armenian.isArmenian == false){
       dispatch(updateArmenian(true));
     }else{
-      Alert.alert("true -> false");
       dispatch(updateArmenian(false));
     }
   }
 
   const saveTranslit = () => {
-    if(translit.isLanguageTransActive == false){
+    // in case the username hasnt been updated
+    if(translit.isTranslit == false){
       dispatch(updateTranslit(true));
     }else{
       dispatch(updateTranslit(false));
     }
   }
 
-  const saveEnglish = () => {
-    if(english.isLanguageEngActive == false){
-      dispatch(updateEnglish(true));
-      Alert.alert("false");
-    }else{
-      dispatch(updateEnglish(false));
-      Alert.alert("true");
-    }
-  }
+
+ 
 
   
   return (
@@ -67,37 +62,28 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Display Languages</Text>
             <View style={styles.itemsRow}>
-              <TouchableOpacity style={english.isLanguageEngActive ? styles.cardActive : styles.cardInactive} 
+              <TouchableOpacity style={armenian.isArmenian ? styles.cardActive : styles.cardInactive} 
+                 onPress={() => saveArmenian()}>
+                   
+                <Text>հայերեն</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={translit.isTranslit ? styles.cardActive : styles.cardInactive} 
+                 onPress={() => saveTranslit()}>
+                   
+                <Text>Hayeren</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={english.isEnglish ? styles.cardActive : styles.cardInactive} 
                  onPress={() => saveEnglish()}>
                    
                 <Text>English</Text>
               </TouchableOpacity>
-            
-              
-                <TouchableOpacity style={[armenian.islanguageArmActive ? styles.cardActive : styles.cardInactive]} 
-                 onPress={() => saveArmenian()}>
-        
-                    <Text>հայերեն</Text>
-                </TouchableOpacity>
+
             </View>
 
             <View style={styles.itemsRow}>
-              <TouchableOpacity style={[translit.isLanguageTransActive ? styles.cardActive : styles.cardInactive]} 
-                onPress={() => saveTranslit()}>
-                  <Text>Hayeren</Text>
-              </TouchableOpacity>
-                  
-              <TouchableOpacity style={[allLang ? styles.cardActive : styles.cardInactive]} 
-                onPress={() => {
-                  setAllLang(!allLang);
-                  if(allLang == false){
-                    setArmLang(false); 
-                    setEngLang(false); 
-                    setTraLang(false);
-                  }
-                }}>
-                  <Text>All</Text>
-              </TouchableOpacity>
+              
             </View>
 
             <Text style={styles.sectionText}>Presentation Mode</Text>

@@ -63,34 +63,13 @@ const MainScreen = ({navigation}) => {
   const [newUsername, setNewUsername] = useState('');
 
   const saveUsername = () => {
-    // in case the username hasnt been updated
-    if(user.username == false){
-      dispatch(updateUsername(true));
-    }else{
-      dispatch(updateUsername(false));
-    }
-}
-
-  const languageArm = useSelector( state => state.languageArmenian);
-  const languageTrans = useSelector( state => state.languageTranslit);
-  const languageEng = useSelector( state => state.languageEnglish);
-
-  const [isArmenianActive, setArmenian] = useState('true');
-  const [isTranslitActive, setTranslit] = useState('true');
-  const [isEnglishActive, setEnglish] = useState('true');
-
-  const saveArmenianState = (isTrue) => {
-    dispatch(updateArmenian(isTrue));
+      // in case the username hasnt been updated
+      if(user.username == false){
+        dispatch(updateUsername(true));
+      }else{
+        dispatch(updateUsername(false));
+      }
   }
-
-  const saveTranslitState = (isTrue) => {
-    dispatch(updateTranslit(isTrue));
-  }
-
-  const saveEnglishState = (isTrue) => {
-    dispatch(updateEnglish(isTrue));
-  }
-
   return (
     <View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
@@ -177,24 +156,6 @@ const OfferingOfTheLamb = ({navigation}) => {
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
 
-  const armenian = useSelector( state => state.languageArmenian );
-  const translit = useSelector( state => state.languageTranslit );
-  const english = useSelector( state => state.languageEnglish );
-
-  const languageQuery = () => {
-    let rowQuery = "";
-    if(armenian.isArmenianActive){
-      rowQuery += 'Ar'
-    }
-    if(translit.isTranslitActive){
-      rowQuery += 'Tr'
-    }
-    if(english.isEnglishActive){
-      rowQuery += 'En'
-    }
-    return rowQuery;
-  }
-
   const loadDB = async () => {
     if(!isDbLoad){
       try {
@@ -206,7 +167,6 @@ const OfferingOfTheLamb = ({navigation}) => {
           then(() => {
             const db = SQLite.openDatabase(dbFile);
             setDbLoad(true);
-            
             db.transaction((tx) => {
               tx.executeSql(
                 `select * from text`,
@@ -217,18 +177,13 @@ const OfferingOfTheLamb = ({navigation}) => {
                   let rowObject;
                   
                   for(i=0; i < result.rows._array.length; i++){
-                    if(armenian.isArmenianActive){
-                      rowStrings += `<tr> <td align="left">`;
-                      rowStrings += rowObject['Ar'];
-                    }
-                    if(translit.isTranslitActive){
-                      rowStrings += `</td> <td align="left">`;
-                      rowStrings += rowObject['Tr'];
-                    }
-                    if(english.isEnglishActive){
-                      rowStrings += `</td> <td align="left">`;
-                      rowStrings += rowObject['En'];
-                    }
+                    rowObject = result.rows._array[i];
+                    rowStrings += `<tr> <td align="left">`;
+                    rowStrings += rowObject['Ar'];
+                    rowStrings += `</td> <td align="left">`;
+                    rowStrings += rowObject['Tr'];
+                    rowStrings += `</td> <td align="left">`;
+                    rowStrings += rowObject['En'];
                     rowStrings += `</td> </tr>`;
                   }
                   rowStrings += `</table> <br/><br/> </body>`;
@@ -253,9 +208,6 @@ const OfferingOfTheLamb = ({navigation}) => {
 
   return (
     <ScrollView style={stylesOfferingOfTheLamb.container}>
-      <Text>${JSON.stringify(armenian.islanguageArmActive)}</Text>
-      <Text>${JSON.stringify(translit.isLanguageTransActive)}</Text>
-      <Text>${JSON.stringify(english.isLanguageEngActive)}</Text>
       <HTML source={{html: textHtml}} contentWidth={width} />
     </ScrollView>
   );
