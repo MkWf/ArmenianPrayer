@@ -57,19 +57,6 @@ const MainScreenNavigator = ({navigation}) => {
 }
 
 const MainScreen = ({navigation}) => {
-  const dispatch = useDispatch();
-
-  const user = useSelector( state => state.user );
-  const [newUsername, setNewUsername] = useState('');
-
-  const saveUsername = () => {
-      // in case the username hasnt been updated
-      if(user.username == false){
-        dispatch(updateUsername(true));
-      }else{
-        dispatch(updateUsername(false));
-      }
-  }
   return (
     <View style={stylesMainScreen.container}>
         <Card style={stylesMainScreen.cardMain}> 
@@ -156,6 +143,10 @@ const OfferingOfTheLamb = ({navigation}) => {
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
 
+  const english = useSelector( state => state.english);
+  const armenian = useSelector( state => state.armenian);
+  const translit = useSelector( state => state.translit);
+
   const loadDB = async () => {
     if(!isDbLoad){
       try {
@@ -167,9 +158,34 @@ const OfferingOfTheLamb = ({navigation}) => {
           then(() => {
             const db = SQLite.openDatabase(dbFile);
             setDbLoad(true);
+            var queryString = null;
+            if(armenian.isArmenian){
+              if(queryString == null){
+                queryString = 'Ar'
+              }
+              if(queryString != null){
+                queryString += ', Ar'
+              }
+            }
+            if(translit.isTranslit){
+              if(queryString == null){
+                queryString = 'Tr'
+              }
+              if(queryString != null){
+                queryString += ', Tr'
+              }
+            }
+            if(english.isEnglish){
+              if(queryString == null){
+                queryString = 'En'
+              }
+              if(queryString != null){
+                queryString += ', En'
+              }
+            }
             db.transaction((tx) => {
               tx.executeSql(
-                `select * from text`,
+                `select ${queryString} from text`,
                 [], 
                 (_, result) => {
                   let i;
@@ -178,12 +194,18 @@ const OfferingOfTheLamb = ({navigation}) => {
                   
                   for(i=0; i < result.rows._array.length; i++){
                     rowObject = result.rows._array[i];
-                    rowStrings += `<tr> <td align="left">`;
-                    rowStrings += rowObject['Ar'];
-                    rowStrings += `</td> <td align="left">`;
-                    rowStrings += rowObject['Tr'];
-                    rowStrings += `</td> <td align="left">`;
-                    rowStrings += rowObject['En'];
+                    if(armenian.isArmenian){
+                      rowStrings += `<tr> <td align="left">`;
+                      rowStrings += rowObject['Ar'];
+                    }
+                    if(translit.isTranslit){
+                      rowStrings += `</td> <td align="left">`;
+                      rowStrings += rowObject['Tr'];
+                    }
+                    if(english.isEnglish){
+                      rowStrings += `</td> <td align="left">`;
+                      rowStrings += rowObject['En'];
+                    }
                     rowStrings += `</td> </tr>`;
                   }
                   rowStrings += `</table> <br/><br/> </body>`;
