@@ -1,14 +1,5 @@
-import { UPDATE_USERNAME, UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/languages';
+import { UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/languages';
 import { combineReducers } from 'redux';
-
-const user  = (user = { username: true}, action) => {
-    switch (action.type) {
-        case UPDATE_USERNAME:
-            return { username: action.username }
-        default:
-            return user;
-    }
-}
 
 const english  = (english = { isEnglish: true}, action) => {
     switch (action.type) {
@@ -38,4 +29,4 @@ const translit  = (translit = { isTranslit: true}, action) => {
 }
 
 
-export default combineReducers({ user, english, armenian, translit });
+export default combineReducers({ english, armenian, translit });
