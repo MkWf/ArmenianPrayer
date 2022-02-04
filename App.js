@@ -260,10 +260,10 @@ const OfferingOfTheLamb = ({navigation}) => {
     rowStrings += `</table> <br/><br/> </body>`;
     liturgy = rowStrings;
     setHTML(liturgy);
-    setPrevPageStartIndex(nextPageStart-4);
-    setPrevPageEndIndex(nextPageStart);
-    setNextPageStartIndex(nextPageStart);
-    setNextPageEndIndex(nextPageEnd+4);
+    setPrevPageStartIndex(prevPageStart-4);
+    setPrevPageEndIndex(prevPageEnd-4);
+    setNextPageStartIndex(nextPageStart-4);
+    setNextPageEndIndex(nextPageEnd-4);
   }
 
   const loadNextPage = () => {
@@ -295,7 +295,7 @@ const OfferingOfTheLamb = ({navigation}) => {
     setHTML(liturgy);
     setPrevPageStartIndex(nextPageStart-4);
     setPrevPageEndIndex(nextPageStart);
-    setNextPageStartIndex(nextPageStart);
+    setNextPageStartIndex(nextPageStart+4);
     setNextPageEndIndex(nextPageEnd+4);
   }
 
