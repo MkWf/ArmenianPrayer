@@ -139,8 +139,10 @@ const DivineLiturgyScreen = ({navigation}) => {
 const OfferingOfTheLamb = ({navigation}) => {
   const [textHtml, setHTML] = React.useState('');
   const [isDbLoad, setDbLoad] = React.useState(false);
-  const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
-  const [nextPageIndex, setNextPageIndex] = React.useState(4);
+  const [prevPageStart, setPrevPageStartIndex] = React.useState(0);
+  const [prevPageEnd, setPrevPageEndIndex] = React.useState(0);
+  const [nextPageStart, setNextPageStartIndex] = React.useState(4);
+  const [nextPageEnd, setNextPageEndIndex] = React.useState(8);
   const [databaseResult, setDatabaseResult] = React.useState(null);
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
@@ -193,7 +195,7 @@ const OfferingOfTheLamb = ({navigation}) => {
 
                   setDatabaseResult(result.rows._array)
                   
-                  for(i=currentPageIndex; i < nextPageIndex; i++){
+                  for(i=prevPageEnd; i < nextPageStart; i++){
                     rowObject = result.rows._array[i];
                     if(armenian.isArmenian){
                       rowStrings += `<tr> <td align="left">`;
@@ -215,8 +217,7 @@ const OfferingOfTheLamb = ({navigation}) => {
                   rowStrings += `</table> <br/><br/> </body>`;
                   liturgy = rowStrings;
                   setHTML(liturgy);
-                  setCurrentPageIndex(nextPageIndex);
-                  setNextPageIndex(nextPageIndex+4);
+                  
                 }, 
                 (_, err) => {
                     console.log("error");
@@ -232,12 +233,12 @@ const OfferingOfTheLamb = ({navigation}) => {
     }
   }
 
-  const loadNewPage = () => {
+  const loadPrevPage = () => {
     let i;
     let rowStrings = BaseLiturgy.liturgyHTML;
     let rowObject;
     
-    for(i=currentPageIndex; i < nextPageIndex; i++){
+    for(i=prevPageStart; i < prevPageEnd; i++){
       rowObject = databaseResult[i];
       if(armenian.isArmenian){
         rowStrings += `<tr> <td align="left">`;
@@ -259,8 +260,43 @@ const OfferingOfTheLamb = ({navigation}) => {
     rowStrings += `</table> <br/><br/> </body>`;
     liturgy = rowStrings;
     setHTML(liturgy);
-    setCurrentPageIndex(nextPageIndex);
-    setNextPageIndex(nextPageIndex+4);
+    setPrevPageStartIndex(nextPageStart-4);
+    setPrevPageEndIndex(nextPageStart);
+    setNextPageStartIndex(nextPageStart);
+    setNextPageEndIndex(nextPageEnd+4);
+  }
+
+  const loadNextPage = () => {
+    let i;
+    let rowStrings = BaseLiturgy.liturgyHTML;
+    let rowObject;
+    
+    for(i=nextPageStart; i < nextPageEnd; i++){
+      rowObject = databaseResult[i];
+      if(armenian.isArmenian){
+        rowStrings += `<tr> <td align="left">`;
+        rowStrings += rowObject['Ar'];
+      }
+      if(translit.isTranslit && armenian.isArmenian){
+        rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['Tr'];
+      }else if(translit.isTranslit && !armenian.isArmenian){
+        rowStrings += `<tr> <td align="left">`;
+        rowStrings += rowObject['Tr'];
+      }
+      if(english.isEnglish){
+        rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['En'];
+      }
+      rowStrings += `</td> </tr>`;
+    }
+    rowStrings += `</table> <br/><br/> </body>`;
+    liturgy = rowStrings;
+    setHTML(liturgy);
+    setPrevPageStartIndex(nextPageStart-4);
+    setPrevPageEndIndex(nextPageStart);
+    setNextPageStartIndex(nextPageStart);
+    setNextPageEndIndex(nextPageEnd+4);
   }
 
   loadDB();
@@ -268,8 +304,8 @@ const OfferingOfTheLamb = ({navigation}) => {
   return (
     <View style={stylesOfferingOfTheLamb.container}>
       <View style={s.container}>
-        <Button color="orange" title="Prev"/>
-        <Button color="orange" title="Next" onPress={() => loadNewPage()} />
+        <Button color="orange" title="Prev" onPress={() => loadPrevPage()}/>
+        <Button color="orange" title="Next" onPress={() => loadNextPage()} />
       </View>
       <HTML source={{html: textHtml}} contentWidth={width} />
     </View>
