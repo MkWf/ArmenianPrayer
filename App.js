@@ -139,6 +139,9 @@ const DivineLiturgyScreen = ({navigation}) => {
 const OfferingOfTheLamb = ({navigation}) => {
   const [textHtml, setHTML] = React.useState('');
   const [isDbLoad, setDbLoad] = React.useState(false);
+  const [currentPageIndex, setCurrentPageIndex] = React.useState(0);
+  const [nextPageIndex, setNextPageIndex] = React.useState(4);
+  const [databaseResult, setDatabaseResult] = React.useState(null);
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
 
@@ -161,9 +164,6 @@ const OfferingOfTheLamb = ({navigation}) => {
             if(armenian.isArmenian){
               if(queryString == null){
                 queryString = 'Ar'
-              }
-              if(queryString != null){
-                queryString += ', Ar'
               }
             }
             if(translit.isTranslit){
@@ -190,8 +190,10 @@ const OfferingOfTheLamb = ({navigation}) => {
                   let i;
                   let rowStrings = BaseLiturgy.liturgyHTML;
                   let rowObject;
+
+                  setDatabaseResult(result.rows._array)
                   
-                  for(i=0; i < 5; i++){
+                  for(i=currentPageIndex; i < nextPageIndex; i++){
                     rowObject = result.rows._array[i];
                     if(armenian.isArmenian){
                       rowStrings += `<tr> <td align="left">`;
@@ -213,10 +215,12 @@ const OfferingOfTheLamb = ({navigation}) => {
                   rowStrings += `</table> <br/><br/> </body>`;
                   liturgy = rowStrings;
                   setHTML(liturgy);
+                  setCurrentPageIndex(nextPageIndex);
+                  setNextPageIndex(nextPageIndex+4);
                 }, 
                 (_, err) => {
                     console.log("error");
-                    alert("out");
+                    alert(err.message);
                 });
               });
             }); 
@@ -228,17 +232,56 @@ const OfferingOfTheLamb = ({navigation}) => {
     }
   }
 
+  const loadNewPage = () => {
+    let i;
+    let rowStrings = BaseLiturgy.liturgyHTML;
+    let rowObject;
+    
+    for(i=currentPageIndex; i < nextPageIndex; i++){
+      rowObject = databaseResult[i];
+      if(armenian.isArmenian){
+        rowStrings += `<tr> <td align="left">`;
+        rowStrings += rowObject['Ar'];
+      }
+      if(translit.isTranslit && armenian.isArmenian){
+        rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['Tr'];
+      }else if(translit.isTranslit && !armenian.isArmenian){
+        rowStrings += `<tr> <td align="left">`;
+        rowStrings += rowObject['Tr'];
+      }
+      if(english.isEnglish){
+        rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['En'];
+      }
+      rowStrings += `</td> </tr>`;
+    }
+    rowStrings += `</table> <br/><br/> </body>`;
+    liturgy = rowStrings;
+    setHTML(liturgy);
+    setCurrentPageIndex(nextPageIndex);
+    setNextPageIndex(nextPageIndex+4);
+  }
+
   loadDB();
 
   return (
     <View style={stylesOfferingOfTheLamb.container}>
+      <View style={s.container}>
+        <Button color="orange" title="Prev"/>
+        <Button color="orange" title="Next" onPress={() => loadNewPage()} />
+      </View>
       <HTML source={{html: textHtml}} contentWidth={width} />
-      <Button color="orange" title="Prev"/>
-      <Button color="orange" title="Next"/>
     </View>
       
   );
 };
+
+const s = StyleSheet.create({
+  container: {
+    alignSelf: "flex-end"
+  }
+})
 
 const stylesMainScreen = StyleSheet.create({
   container: {

@@ -17,6 +17,7 @@ export const liturgyHTML =
         table tr
         {
             background-color: white;
+            
         }
         
         table tr.header
