@@ -1,17 +1,16 @@
 import 'react-native-gesture-handler';
-import { Provider, useSelector, useDispatch } from 'react-redux';  //redux - make the state available throughout the app 
+import { Provider, useSelector } from 'react-redux';  //redux - make the state available throughout the app 
 import { PersistGate } from 'redux-persist/integration/react'; //redux - in charge of reloading the data when the application is reopened.
 import React, {useReducer, useState} from "react";  //OfferingOfTheLamb
 import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
 import Constants from "expo-constants"; //OfferingOfTheLamb
-import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity, useWindowDimensions,ScrollView} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
-import { Avatar, Button, Card, Title, Paragraph, TextInput } from 'react-native-paper';
+import {StyleSheet, StatusBar, View, Text, SafeAreaView, Image, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
+import { Card, Paragraph } from 'react-native-paper';
 import { createDrawerNavigator } from '@react-navigation/drawer'; //MainScreenNavigator
 import { NavigationContainer } from '@react-navigation/native'; //App
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; //App
 import CustomSidebarMenu from './CustomSidebarMenu'; //MainScreenNavigator
 import { store, persistor } from './src/asset/store/store';
-import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
 
 //OfferingOfTheLamb
 import * as SQLite from 'expo-sqlite';
@@ -29,9 +28,9 @@ export default function App() {
       <PersistGate persistor={persistor} loading={null}>
         <NavigationContainer>
           <Stack.Navigator>
-              <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
+              <Stack.Screen name="Main" component={OfferingOfTheLamb} options={{headerShown: false}}/>  
               <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
-              <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
+              <Stack.Screen name="Liturgy" component={MainScreenNavigator}/>  
             </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
@@ -192,7 +191,7 @@ const OfferingOfTheLamb = ({navigation}) => {
                   let rowStrings = BaseLiturgy.liturgyHTML;
                   let rowObject;
                   
-                  for(i=0; i < result.rows._array.length; i++){
+                  for(i=0; i < 5; i++){
                     rowObject = result.rows._array[i];
                     if(armenian.isArmenian){
                       rowStrings += `<tr> <td align="left">`;
@@ -232,9 +231,12 @@ const OfferingOfTheLamb = ({navigation}) => {
   loadDB();
 
   return (
-    <ScrollView style={stylesOfferingOfTheLamb.container}>
+    <View style={stylesOfferingOfTheLamb.container}>
       <HTML source={{html: textHtml}} contentWidth={width} />
-    </ScrollView>
+      <Button color="orange" title="Prev"/>
+      <Button color="orange" title="Next"/>
+    </View>
+      
   );
 };
 
