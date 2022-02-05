@@ -18,6 +18,7 @@ import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
 import HTML from 'react-native-render-html';
 import * as BaseLiturgy from './constants/liturgyBaseHTML';
+import { Slider } from 'react-native-elements/dist/slider/Slider';
 
 const Drawer = createDrawerNavigator();  //MainScreenNavigator
 const Stack = createNativeStackNavigator();  //App
@@ -77,7 +78,6 @@ const MainScreen = ({navigation}) => {
     </View> 
   );
 };
-
 
 const DivineLiturgyScreen = ({navigation}) => {
   return (
@@ -150,6 +150,8 @@ const OfferingOfTheLamb = ({navigation}) => {
   const english = useSelector( state => state.english);
   const armenian = useSelector( state => state.armenian);
   const translit = useSelector( state => state.translit);
+  const scroll = useSelector( state => state.scroll);
+  const slide = useSelector( state => state.slide); 
 
   const loadDB = async () => {
     if(!isDbLoad){
@@ -195,28 +197,55 @@ const OfferingOfTheLamb = ({navigation}) => {
 
                   setDatabaseResult(result.rows._array)
                   
-                  for(i=prevPageEnd; i < nextPageStart; i++){
-                    rowObject = result.rows._array[i];
-                    if(armenian.isArmenian){
-                      rowStrings += `<tr> <td align="left">`;
-                      rowStrings += rowObject['Ar'];
+                  if(scroll.isScroll){
+                    for(i=0; i < result.rows._array.length; i++){
+                      rowObject = result.rows._array[i];
+                      if(armenian.isArmenian){
+                        rowStrings += `<tr> <td align="left">`;
+                        rowStrings += rowObject['Ar'];
+                      }
+                      if(translit.isTranslit && armenian.isArmenian){
+                        rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['Tr'];
+                      }else if(translit.isTranslit && !armenian.isArmenian){
+                        rowStrings += `<tr> <td align="left">`;
+                        rowStrings += rowObject['Tr'];
+                      }
+                      if(english.isEnglish){
+                        rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['En'];
+                      }
+                      rowStrings += `</td> </tr>`;
                     }
-                    if(translit.isTranslit && armenian.isArmenian){
-                      rowStrings += `</td> <td align="left">`;
-                      rowStrings += rowObject['Tr'];
-                    }else if(translit.isTranslit && !armenian.isArmenian){
-                      rowStrings += `<tr> <td align="left">`;
-                      rowStrings += rowObject['Tr'];
-                    }
-                    if(english.isEnglish){
-                      rowStrings += `</td> <td align="left">`;
-                      rowStrings += rowObject['En'];
-                    }
-                    rowStrings += `</td> </tr>`;
+                    rowStrings += `</table> <br/><br/> </body>`;
+                    liturgy = rowStrings;
+                    setHTML(liturgy);
                   }
-                  rowStrings += `</table> <br/><br/> </body>`;
-                  liturgy = rowStrings;
-                  setHTML(liturgy);
+                  if(slide.isSlide){
+                    for(i=prevPageEnd; i < nextPageStart; i++){
+                      rowObject = result.rows._array[i];
+                      if(armenian.isArmenian){
+                        rowStrings += `<tr> <td align="left">`;
+                        rowStrings += rowObject['Ar'];
+                      }
+                      if(translit.isTranslit && armenian.isArmenian){
+                        rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['Tr'];
+                      }else if(translit.isTranslit && !armenian.isArmenian){
+                        rowStrings += `<tr> <td align="left">`;
+                        rowStrings += rowObject['Tr'];
+                      }
+                      if(english.isEnglish){
+                        rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['En'];
+                      }
+                      rowStrings += `</td> </tr>`;
+                    }
+                    rowStrings += `</table> <br/><br/> </body>`;
+                    liturgy = rowStrings;
+                    setHTML(liturgy);
+                  }
+                  
                 }, 
                 (_, err) => {
                     console.log("error");
@@ -300,19 +329,28 @@ const OfferingOfTheLamb = ({navigation}) => {
 
   loadDB();
 
-  return (
-    <View style={stylesOfferingOfTheLamb.container}>
-      <View style={s.container}>
-        <Button color="orange" title="Prev" onPress={() => loadPrevPage()}/>
-        <Button color="orange" title="Next" onPress={() => loadNextPage()} />
+  if(scroll.isScroll){
+    return(
+      <View style={stylesOfferingOfTheLamb.container}>
+        <ScrollView>
+          <HTML source={{html: textHtml}} contentWidth={width} />
+        </ScrollView>
       </View>
-      <HTML source={{html: textHtml}} contentWidth={width} />
-    </View>
-      
-  );
+    );
+  }else if(slide.isSlide){
+    return (
+      <View style={stylesOfferingOfTheLamb.container}>
+        <View style={buttonStyle.container}>
+          <Button color="orange" title="Prev" onPress={() => loadPrevPage()}/>
+          <Button color="orange" title="Next" onPress={() => loadNextPage()} />
+        </View>
+        <HTML source={{html: textHtml}} contentWidth={width} />
+      </View>
+    );
+  }
 };
 
-const s = StyleSheet.create({
+const buttonStyle = StyleSheet.create({
   container: {
     alignSelf: "flex-end"
   }
