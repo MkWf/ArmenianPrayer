@@ -43,16 +43,20 @@ const CustomSidebarMenu = (props) => {
   const saveScroll = () => {
     if(scroll.isScroll == false){
       dispatch(updateScroll(true));
+      dispatch(updateSlide(false));
     }else{
       dispatch(updateScroll(false));
+      dispatch(updateSlide(true));
     }
   }
 
   const saveSlide = () => {
     if(slide.isSlide == false){
       dispatch(updateSlide(true));
+      dispatch(updateScroll(false));
     }else{
       dispatch(updateSlide(false));
+      dispatch(updateScroll(true));
     }
   }
 
@@ -93,14 +97,22 @@ const CustomSidebarMenu = (props) => {
             <Text style={styles.sectionText}>Presentation Mode</Text>
             <View style={styles.itemsRow}>
               <TouchableOpacity style={scroll.isScroll ? styles.scrollActive : styles.scrollInactive} 
-                onPress={() => saveScroll()}>
+                onPress={() => {
+                  if(!scroll.isScroll) {
+                    saveScroll(); //only press this button if it's inactive
+                  }
+                }}>  
                 <View style={styles.scrollSides}></View>
                 <Text style={styles.scrollCenter}>Scroll</Text>
                 <View style={styles.scrollSides}></View>
               </TouchableOpacity>
 
               <TouchableOpacity style={slide.isSlide ? styles.slideActive : styles.slideInactive} 
-                onPress={() => saveSlide()}>
+                onPress={() => {
+                  if(!slide.isSlide) {
+                    saveSlide(); //only press this button if it's inactive
+                  }
+                }}>  
                 <Text style={styles.slideBoxNonText}></Text>
                 <Text style={styles.slideBoxNonText}></Text>
                 <Text style={styles.slideBoxNonText}></Text>
