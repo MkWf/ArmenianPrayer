@@ -1,9 +1,9 @@
-import React, { useState} from 'react';
+import React from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
 import { updateScroll, updateSlide } from './src/asset/actions/displays';
 
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSelector, useDispatch } from 'react-redux';
 
 
