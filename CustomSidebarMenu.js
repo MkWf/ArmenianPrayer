@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
-import { updateUsername, updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
+import { updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
+import { updateScroll, updateSlide } from './src/asset/actions/displays';
 
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,22 +10,13 @@ import { useSelector, useDispatch } from 'react-redux';
 const CustomSidebarMenu = (props) => {
   const dispatch = useDispatch();
 
-  const user = useSelector( state => state.user);
   const english = useSelector( state => state.english);
   const armenian = useSelector( state => state.armenian);
   const translit = useSelector( state => state.translit);
-
-  const saveUsername = () => {
-    // in case the username hasnt been updated
-    if(user.username == false){
-      dispatch(updateUsername(true));
-    }else{
-      dispatch(updateUsername(false));
-    }
-  }
+  const scroll = useSelector( state => state.scroll);
+  const slide = useSelector( state => state.slide); 
 
   const saveEnglish = () => {
-    // in case the username hasnt been updated
     if(english.isEnglish == false){
       dispatch(updateEnglish(true));
     }else{
@@ -33,7 +25,6 @@ const CustomSidebarMenu = (props) => {
   }
 
   const saveArmenian = () => {
-    // in case the username hasnt been updated
     if(armenian.isArmenian == false){
       dispatch(updateArmenian(true));
     }else{
@@ -42,11 +33,26 @@ const CustomSidebarMenu = (props) => {
   }
 
   const saveTranslit = () => {
-    // in case the username hasnt been updated
     if(translit.isTranslit == false){
       dispatch(updateTranslit(true));
     }else{
       dispatch(updateTranslit(false));
+    }
+  }
+
+  const saveScroll = () => {
+    if(scroll.isScroll == false){
+      dispatch(updateScroll(true));
+    }else{
+      dispatch(updateScroll(false));
+    }
+  }
+
+  const saveSlide = () => {
+    if(slide.isSlide == false){
+      dispatch(updateSlide(true));
+    }else{
+      dispatch(updateSlide(false));
     }
   }
 
@@ -86,13 +92,15 @@ const CustomSidebarMenu = (props) => {
 
             <Text style={styles.sectionText}>Presentation Mode</Text>
             <View style={styles.itemsRow}>
-              <TouchableOpacity style={styles.scrollInactive} >
+              <TouchableOpacity style={scroll.isScroll ? styles.scrollActive : styles.scrollInactive} 
+                onPress={() => saveScroll()}>
                 <View style={styles.scrollSides}></View>
                 <Text style={styles.scrollCenter}>Scroll</Text>
                 <View style={styles.scrollSides}></View>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.slideInactive} >
+              <TouchableOpacity style={slide.isSlide ? styles.slideActive : styles.slideInactive} 
+                onPress={() => saveSlide()}>
                 <Text style={styles.slideBoxNonText}></Text>
                 <Text style={styles.slideBoxNonText}></Text>
                 <Text style={styles.slideBoxNonText}></Text>
@@ -174,6 +182,35 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 10,
     flexDirection: 'row'
+  },
+  scrollActive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    flexDirection: 'row'
+  },
+  slideActive: {
+    shadowColor: 'black',
+    shadowRadius: 200,
+    shadowOpacity: 100,
+    elevation: 3,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    flex: 1,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly'
   },
   slideInactive: {
     shadowColor: 'black',

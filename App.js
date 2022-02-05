@@ -28,9 +28,9 @@ export default function App() {
       <PersistGate persistor={persistor} loading={null}>
         <NavigationContainer>
           <Stack.Navigator>
-              <Stack.Screen name="Main" component={OfferingOfTheLamb} options={{headerShown: false}}/>  
+              <Stack.Screen name="Main" component={MainScreenNavigator} options={{headerShown: false}}/>  
               <Stack.Screen name="Divine Liturgy" component={DivineLiturgyScreen}/>
-              <Stack.Screen name="Liturgy" component={MainScreenNavigator}/>  
+              <Stack.Screen name="Liturgy" component={OfferingOfTheLamb}/>  
             </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
@@ -217,7 +217,6 @@ const OfferingOfTheLamb = ({navigation}) => {
                   rowStrings += `</table> <br/><br/> </body>`;
                   liturgy = rowStrings;
                   setHTML(liturgy);
-                  
                 }, 
                 (_, err) => {
                     console.log("error");

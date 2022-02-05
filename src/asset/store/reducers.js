@@ -1,4 +1,5 @@
 import { UPDATE_ARMENIAN, UPDATE_TRANSLIT, UPDATE_ENGLISH } from '../actions/languages';
+import { UPDATE_SCROLL, UPDATE_SLIDE } from '../actions/displays';
 import { combineReducers } from 'redux';
 
 const english  = (english = { isEnglish: true}, action) => {
@@ -28,5 +29,22 @@ const translit  = (translit = { isTranslit: true}, action) => {
     }
 }
 
+const scroll  = (scroll = { isScroll: true}, action) => {
+    switch (action.type) {
+        case UPDATE_SCROLL:
+            return { isScroll: action.isScroll }
+        default:
+            return scroll;
+    }
+}
 
-export default combineReducers({ english, armenian, translit });
+const slide  = (slide = { isSlide: false}, action) => {
+    switch (action.type) {
+        case UPDATE_SLIDE:
+            return { isSlide: action.isSlide }
+        default:
+            return slide;
+    }
+}
+
+export default combineReducers({ english, armenian, translit, scroll, slide });
