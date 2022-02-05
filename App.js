@@ -211,8 +211,11 @@ const OfferingOfTheLamb = ({navigation}) => {
                         rowStrings += `<tr> <td align="left">`;
                         rowStrings += rowObject['Tr'];
                       }
-                      if(english.isEnglish){
+                      if((translit.isTranslit || armenian.isArmenian) && english.isEnglish){
                         rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['En'];
+                      }else if(english.isEnglish && !translit.isTranslit && !armenian.isArmenian){
+                        rowStrings += `<tr> <td align="left">`;
                         rowStrings += rowObject['En'];
                       }
                       rowStrings += `</td> </tr>`;
@@ -235,8 +238,11 @@ const OfferingOfTheLamb = ({navigation}) => {
                         rowStrings += `<tr> <td align="left">`;
                         rowStrings += rowObject['Tr'];
                       }
-                      if(english.isEnglish){
+                      if((translit.isTranslit || armenian.isArmenian) && english.isEnglish){
                         rowStrings += `</td> <td align="left">`;
+                        rowStrings += rowObject['En'];
+                      }else if(english.isEnglish && (!translit.isTranslit && !armenian.isArmenian)){
+                        rowStrings += `<tr> <td align="left">`;
                         rowStrings += rowObject['En'];
                       }
                       rowStrings += `</td> </tr>`;
@@ -279,8 +285,11 @@ const OfferingOfTheLamb = ({navigation}) => {
         rowStrings += `<tr> <td align="left">`;
         rowStrings += rowObject['Tr'];
       }
-      if(english.isEnglish){
+      if((translit.isTranslit || armenian.isArmenian) && english.isEnglish){
         rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['En'];
+      }else if(english.isEnglish && (!translit.isTranslit && !armenian.isArmenian)){
+        rowStrings += `<tr> <td align="left">`;
         rowStrings += rowObject['En'];
       }
       rowStrings += `</td> </tr>`;
@@ -312,8 +321,11 @@ const OfferingOfTheLamb = ({navigation}) => {
         rowStrings += `<tr> <td align="left">`;
         rowStrings += rowObject['Tr'];
       }
-      if(english.isEnglish){
+      if((translit.isTranslit || armenian.isArmenian) && english.isEnglish){
         rowStrings += `</td> <td align="left">`;
+        rowStrings += rowObject['En'];
+      }else if(english.isEnglish && (!translit.isTranslit && !armenian.isArmenian)){
+        rowStrings += `<tr> <td align="left">`;
         rowStrings += rowObject['En'];
       }
       rowStrings += `</td> </tr>`;
