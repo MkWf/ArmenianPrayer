@@ -22,6 +22,7 @@ import { Slider } from 'react-native-elements/dist/slider/Slider';
 
 const Drawer = createDrawerNavigator();  //MainScreenNavigator
 const Stack = createNativeStackNavigator();  //App
+const slideshowRowInterval = 4;
 
 export default function App() {
   return (
@@ -141,8 +142,8 @@ const OfferingOfTheLamb = ({navigation}) => {
   const [isDbLoad, setDbLoad] = React.useState(false);
   const [prevPageStart, setPrevPageStartIndex] = React.useState(0);
   const [prevPageEnd, setPrevPageEndIndex] = React.useState(0);
-  const [nextPageStart, setNextPageStartIndex] = React.useState(4);
-  const [nextPageEnd, setNextPageEndIndex] = React.useState(8);
+  const [nextPageStart, setNextPageStartIndex] = React.useState(slideshowRowInterval);
+  const [nextPageEnd, setNextPageEndIndex] = React.useState(slideshowRowInterval+4);
   const [databaseResult, setDatabaseResult] = React.useState(null);
   const { width } = useWindowDimensions();
   const dbFile = 'table.db';
@@ -297,10 +298,10 @@ const OfferingOfTheLamb = ({navigation}) => {
     rowStrings += `</table> <br/><br/> </body>`;
     liturgy = rowStrings;
     setHTML(liturgy);
-    setPrevPageStartIndex(prevPageStart-4);
-    setPrevPageEndIndex(prevPageEnd-4);
-    setNextPageStartIndex(nextPageStart-4);
-    setNextPageEndIndex(nextPageEnd-4);
+    setPrevPageStartIndex(prevPageStart-slideshowRowInterval);
+    setPrevPageEndIndex(prevPageEnd-slideshowRowInterval);
+    setNextPageStartIndex(nextPageStart-slideshowRowInterval);
+    setNextPageEndIndex(nextPageEnd-slideshowRowInterval);
   }
 
   const loadNextPage = () => {
@@ -333,10 +334,10 @@ const OfferingOfTheLamb = ({navigation}) => {
     rowStrings += `</table> <br/><br/> </body>`;
     liturgy = rowStrings;
     setHTML(liturgy);
-    setPrevPageStartIndex(nextPageStart-4);
+    setPrevPageStartIndex(nextPageStart-slideshowRowInterval);
     setPrevPageEndIndex(nextPageStart);
-    setNextPageStartIndex(nextPageStart+4);
-    setNextPageEndIndex(nextPageEnd+4);
+    setNextPageStartIndex(nextPageStart+slideshowRowInterval);
+    setNextPageEndIndex(nextPageEnd+slideshowRowInterval);
   }
 
   loadDB();
@@ -374,7 +375,6 @@ const stylesMainScreen = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f5f5dd',
     justifyContent: "space-evenly",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   cardMain: {
       elevation: 4,
@@ -410,7 +410,6 @@ const stylesDivineLiturgyScreen = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f5f5dd',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
   },
   headerContainer: {
     width: '85%',
@@ -450,6 +449,5 @@ const stylesOfferingOfTheLamb = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
   }
 })
