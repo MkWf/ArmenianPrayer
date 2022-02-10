@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
 import HTML from 'react-native-render-html';
-import * as BaseLiturgy from '../../liturgyBaseHTML';
+import * as BaseLiturgy from '../../constants/liturgyBaseHTML';
 import { useSelector } from 'react-redux';  //redux - make the state available throughout the app 
 import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; 
 
@@ -32,7 +32,7 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
             await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
           };
   
-          await FileSystem.downloadAsync(Asset.fromModule(require('./asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${dbFile}`).
+          await FileSystem.downloadAsync(Asset.fromModule(require('../../asset/table.db')).uri, FileSystem.documentDirectory + `SQLite/${dbFile}`).
             then(() => {
               const db = SQLite.openDatabase(dbFile);
               setDbLoad(true);

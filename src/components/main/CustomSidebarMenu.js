@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
-import { updateArmenian, updateTranslit, updateEnglish } from './src/actions/languages';
-import { updateScroll, updateSlide } from './src/actions/displays';
+import { updateArmenian, updateTranslit, updateEnglish } from '../../redux/actions/languages'
+import { updateScroll, updateSlide } from '../../redux/actions/displays';
 
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSelector, useDispatch } from 'react-redux';

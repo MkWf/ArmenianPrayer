@@ -1,4 +1,8 @@
-const DivineLiturgyScreen = ({navigation}) => {
+import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
+import { Card, Paragraph } from 'react-native-paper';
+import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
+
+export const DivineLiturgyScreen = ({navigation}) => {
     return (
       <View style={stylesDivineLiturgyScreen.container}>
           <Card style={stylesDivineLiturgyScreen.headerContainer}> 

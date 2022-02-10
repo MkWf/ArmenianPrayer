@@ -5,7 +5,7 @@ import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, Sc
 
 const Drawer = createDrawerNavigator();  
 
-export const MainScreenNavigator = ({navigation}) => {
+export const MainScreenNavigator() {
     return(
       <Drawer.Navigator
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>
