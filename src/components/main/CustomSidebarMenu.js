@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, Text, TouchableOpacity, StatusBar, Alert } from 'react-native';
-import { updateArmenian, updateTranslit, updateEnglish } from './src/asset/actions/languages';
-import { updateScroll, updateSlide } from './src/asset/actions/displays';
+import { updateArmenian, updateTranslit, updateEnglish } from './src/actions/languages';
+import { updateScroll, updateSlide } from './src/actions/displays';
 
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSelector, useDispatch } from 'react-redux';
 
 
-const CustomSidebarMenu = (props) => {
+export const CustomSidebarMenu = (props) => {
   const dispatch = useDispatch();
 
   const english = useSelector( state => state.english);
