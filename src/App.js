@@ -10,9 +10,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer'; //MainScreenNa
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createNativeStackNavigator } from "@react-navigation/native-stack"; 
 import { store, persistor } from './redux/store/store'
-import MainScreenNavigator from './components/main/MainScreen'
-import DivineLiturgyScreen from './components/divine_liturgy/DivineLiturgyScreen'
-import OfferingOfTheLambScreen from './components/offering_of_the_lamb/OfferingOfTheLambScreen'
+import {MainScreenNavigator} from './components/main/MainScreen'
+import {DivineLiturgyScreen} from './components/divine_liturgy/DivineLiturgyScreen'
+import {OfferingOfTheLambScreen} from './components/offering_of_the_lamb/OfferingOfTheLambScreen'
 
 //OfferingOfTheLamb
 import * as SQLite from 'expo-sqlite';

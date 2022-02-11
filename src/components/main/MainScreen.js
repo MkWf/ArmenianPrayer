@@ -1,11 +1,13 @@
+import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer'; 
 import CustomSidebarMenu from './CustomSidebarMenu';
 import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; 
+import { Card, Paragraph } from 'react-native-paper';
 
 
 const Drawer = createDrawerNavigator();  
 
-export const MainScreenNavigator() {
+export const MainScreenNavigator = ({navigation}) => {
     return(
       <Drawer.Navigator
         drawerContent={(props) => <CustomSidebarMenu {...props} />}>

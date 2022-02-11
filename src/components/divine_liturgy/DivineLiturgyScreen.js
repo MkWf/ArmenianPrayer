@@ -1,3 +1,4 @@
+import React from 'react';
 import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; //OfferingOfTheLamb-useWindowDimensions,ScrollView
 import { Card, Paragraph } from 'react-native-paper';
 import Svg, { Path } from "react-native-svg" //DivineLiturgyScreen 
