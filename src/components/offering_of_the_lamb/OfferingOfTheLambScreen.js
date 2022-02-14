@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from "react";
 import * as SQLite from 'expo-sqlite';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
@@ -6,6 +6,8 @@ import HTML from 'react-native-render-html';
 import * as BaseLiturgy from '../../constants/liturgyBaseHTML';
 import { useSelector } from 'react-redux';  //redux - make the state available throughout the app 
 import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; 
+
+const slideshowRowInterval = 4;
 
 export const OfferingOfTheLambScreen = ({navigation}) => {
     const [textHtml, setHTML] = React.useState('');
@@ -24,7 +26,7 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
     const scroll = useSelector( state => state.scroll);
     const slide = useSelector( state => state.slide); 
 
-    const slideshowRowInterval = 4;
+
   
     const loadDB = async () => {
       if(!isDbLoad){
