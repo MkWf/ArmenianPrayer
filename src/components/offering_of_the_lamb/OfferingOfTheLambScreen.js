@@ -219,8 +219,9 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
       if(textHtml == null){
         return(
           <View style={stylesOfferingOfTheLamb.container}>
-          <Text>Loading....</Text>
-        </View>
+            <Text>Liturgy</Text>
+            <Text>Loading</Text>
+          </View>
         )
       }else{
         return(
