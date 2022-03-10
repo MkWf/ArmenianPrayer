@@ -10,7 +10,7 @@ import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, Sc
 const slideshowRowInterval = 4;
 
 export const OfferingOfTheLambScreen = ({navigation}) => {
-    const [textHtml, setHTML] = React.useState('');
+    const [textHtml, setHTML] = React.useState(null);
     const [isDbLoad, setDbLoad] = React.useState(false);
     const [prevPageStart, setPrevPageStartIndex] = React.useState(0);
     const [prevPageEnd, setPrevPageEndIndex] = React.useState(0);
@@ -27,7 +27,6 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
     const slide = useSelector( state => state.slide); 
 
 
-  
     const loadDB = async () => {
       if(!isDbLoad){
         try {
@@ -217,13 +216,21 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
     loadDB();
   
     if(scroll.isScroll){
-      return(
-        <View style={stylesOfferingOfTheLamb.container}>
-          <ScrollView>
-            <HTML source={{html: textHtml}} contentWidth={width} />
-          </ScrollView>
+      if(textHtml == null){
+        return(
+          <View style={stylesOfferingOfTheLamb.container}>
+          <Text>Loading....</Text>
         </View>
-      );
+        )
+      }else{
+        return(
+          <View style={stylesOfferingOfTheLamb.container}>
+            <ScrollView>
+              <HTML source={{html: textHtml}} contentWidth={width} />
+            </ScrollView>
+          </View>
+        );
+      }
     }else if(slide.isSlide){
       return (
         <View style={stylesOfferingOfTheLamb.container}>
