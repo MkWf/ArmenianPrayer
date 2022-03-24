@@ -5,7 +5,7 @@ import { Asset } from 'expo-asset';
 import HTML from 'react-native-render-html';
 import * as BaseLiturgy from '../../constants/liturgyBaseHTML';
 import { useSelector } from 'react-redux';  //redux - make the state available throughout the app 
-import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button} from "react-native"; 
+import {StyleSheet, View, Text, Alert, TouchableOpacity, useWindowDimensions, ScrollView, Button, TouchableHighlight} from "react-native"; 
 
 const slideshowRowInterval = 4;
 
@@ -235,25 +235,39 @@ export const OfferingOfTheLambScreen = ({navigation}) => {
     }else if(slide.isSlide){
       return (
         <View style={stylesOfferingOfTheLamb.container}>
-          <View style={buttonStyle.container}>
-            <Button color="orange" title="Prev" onPress={() => loadPrevPage()}/>
-            <Button color="orange" title="Next" onPress={() => loadNextPage()} />
-          </View>
+          <TouchableOpacity style={stylesOfferingOfTheLamb.prevButtonStyle} onPress={loadPrevPage}/>
+          <TouchableOpacity style={stylesOfferingOfTheLamb.nextButtonStyle} onPress={loadNextPage}/>
           <HTML source={{html: textHtml}} contentWidth={width} />
         </View>
       );
     }
   };
   
-  const buttonStyle = StyleSheet.create({
-    container: {
-      alignSelf: "flex-end"
-    }
-  })
+
+  
+
   
   const stylesOfferingOfTheLamb = StyleSheet.create({
     container: {
       backgroundColor: "#fff",
       flex: 1,
+    },
+
+    prevButtonStyle: {
+      zIndex: 2,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      alignSelf: "flex-start",
+      width: "25%"
+    },
+
+    nextButtonStyle: {
+      zIndex: 2,
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      alignSelf: "flex-end",
+      width: "25%"
     }
   })
